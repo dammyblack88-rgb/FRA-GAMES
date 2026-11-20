@@ -76,3 +76,9 @@ test("save validation rejects inconsistent mission completion and invalid progre
   assert.throws(() => createGameSave({ ...save, progression: { ...save.progression, experience: -1 } }), /progression.experience/);
   assert.throws(() => createGameSave({ ...save, progression: { ...save.progression, unlocks: ["same", "same"] } }), /contains duplicates/);
 });
+
+test("save validation rejects empty target constraints on mission objectives", () => {
+  const save = fixture();
+  save.missionStates[0].objectives[0].targetId = " ";
+  assert.throws(() => createGameSave(save), /mission objective targetId/);
+});
