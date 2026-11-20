@@ -32,12 +32,10 @@
 
 GitHub Actions workflow: Core gameplay tests.
 
-- Latest previously completed run: https://github.com/dammyblack88-rgb/FRA-GAMES/actions/runs/44807563792 — **success** (documentation/status commit before the native subsystem bridge).
-- A new run covering the Unreal scaffold structural tests and world simulation tests was triggered for commit `7c3869f` and was still in progress at the time of this update: https://github.com/dammyblack88-rgb/FRA-GAMES/actions/runs/44807342618.
-- The earlier workflow run for the workflow commit also completed successfully.
-- Tests cover life creation, invalid opening rejection, save continuation, age progression, business opening, sales, stock validation, restocking, NPC daily schedules, overnight shifts, invalid/overlapping schedules, world clock rollover/pause, district validation, road neighbours and weighted route finding. Structural checks also validate the Unreal project descriptor, targets, player/GameMode source and input mappings. Latest run after the NPC overlap-validation hardening: **success**.
-
-These are headless domain-logic tests. They do not prove that a 3D game, Unreal project, graphics pipeline or playable city works.
+- Latest completed run: https://github.com/dammyblack88-rgb/FRA-GAMES/actions/runs/44813774633 — **success** for commit `40ec01bb0fc94c4e2e2a308899336ce7bfadf8ad`.
+- Result: **54 tests passed, 0 failed**.
+- Coverage includes life creation/continuation, business rules, inventory transactions, save validation, NPC schedules and population, world interactions, mission event bridging, seeded district content, Unreal project structure and engine-independent world routing.
+- These are headless JavaScript domain and source-structure tests. They do not prove that Unreal C++ compiles, the editor opens, a 3D world renders or a packaged game is playable.
 
 ## Not yet implemented
 
