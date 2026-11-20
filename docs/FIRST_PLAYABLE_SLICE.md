@@ -62,6 +62,8 @@ The engine-independent core now provides:
 - Shared-minute population snapshots that validate resident identities and ensure all schedule locations belong to the active district.
 - A first-district seed layout with eight locations, eight logical road links and six scheduled residents.
 - Character-life state and business ledger rules.
+- Local interaction registry for resident conversations (only when the NPC schedule snapshot places them at the player location), one-time item pickups, shop buy/sell transactions, bus-stop travel to authored destinations and service interactions.
+- World interaction events can advance matching mission objectives with event-ID replay protection. First-district target and provision-stall stock seeds are in `src/content/first-district-interactions.js`.
 
 The Unreal project must treat the logical world state as authoritative; actors and meshes visualize it. Do not make the simulation depend on every NPC Actor being loaded in the level.
 
@@ -70,7 +72,7 @@ The Unreal project must treat the logical world state as authoritative; actors a
 The slice is complete only when all of the following are demonstrated in an Unreal build:
 
 ### Player and life
-- [ ] Player can move, turn the camera, jump and interact.
+- [ ] Player can move, turn the camera, jump and interact.\n- [ ] Player can talk to a resident only when that resident is actually present, pick up an item once, buy/sell from a finite-stock shop, use a service and travel to an authored bus destination.\n- [ ] World interaction events advance matching mission objectives once and are included in save state.
 - [ ] New Life creates a distinct character save.
 - [ ] Continue Life restores the same character and business state.
 - [ ] Save/load survives closing and reopening the game.
