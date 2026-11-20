@@ -64,6 +64,7 @@ The engine-independent core now provides:
 - Character-life state and business ledger rules.
 - Local interaction registry for resident conversations (only when the NPC schedule snapshot places them at the player location), one-time item pickups, shop buy/sell transactions, bus-stop travel to authored destinations and service interactions.
 - World interaction events can advance matching mission objectives with event-ID replay protection. First-district target and provision-stall stock seeds are in `src/content/first-district-interactions.js`.
+- The authored `first-morning-in-the-neighbourhood` mission connects talking to Mama Kemi, buying provisions and taking a bus ride, then grants a one-time wallet and experience reward. Its content is in `src/content/first-district-missions.js` and the end-to-end rules are covered in `test/first-district.test.js`.
 
 The Unreal project must treat the logical world state as authoritative; actors and meshes visualize it. A procedural blockout actor source now creates the ground, eight road corridors and the seven first-district place volumes; see [docs/FIRST_DISTRICT_BLOCKOUT.md](FIRST_DISTRICT_BLOCKOUT.md). The actor has not yet been placed in an Unreal level or tested. Do not make the simulation depend on every NPC Actor being loaded in the level.
 
