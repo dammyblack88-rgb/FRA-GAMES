@@ -5,6 +5,7 @@ This directory contains engine-independent rules that can be tested without a 3D
 Current modules:
 - `life.js`: character-life creation, safe continuation and age progression.
 - `business.js`: first-business economy rules for an akara stand.
+- `inventory.js`: player wallet and item inventory, finite-stock shops, atomic buy/sell transactions and duplicate-safe ledgers.
 - `npc.js`: deterministic daily activity and location resolution, including overnight schedules, overlap validation and shared-clock population snapshots.
 - `world.js`: deterministic world clock, validated district/location/road records, neighbour lookup and lowest-cost road pathfinding.
 - `save.js`: versioned game snapshots with active-life/business ownership checks, world-clock validation and detached load copies.
