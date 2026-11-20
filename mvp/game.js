@@ -185,6 +185,16 @@ function boot() {
   addEventListener("keydown",onKeyDown);addEventListener("keyup",onKeyUp);
   renderer.domElement.addEventListener("click",()=>{if(started&&document.pointerLockElement!==renderer.domElement)renderer.domElement.requestPointerLock?.()});
   addEventListener("mousemove",e=>{if(document.pointerLockElement===renderer.domElement){yaw-=e.movementX*.0025;pitch=clamp(pitch-e.movementY*.0015,-.55,.3)}});
+  // Touch drag rotates the camera on phones/tablets; movement pad and action button remain separate.
+  let touchLook=null;
+  renderer.domElement.addEventListener("touchstart",e=>{if(e.touches.length===1){touchLook={x:e.touches[0].clientX,y:e.touches[0].clientY}}},{passive:true});
+  renderer.domElement.addEventListener("touchmove",e=>{
+    if(!touchLook||e.touches.length!==1)return;
+    const t=e.touches[0],dx=t.clientX-touchLook.x,dy=t.clientY-touchLook.y;
+    yaw-=dx*.006;pitch=clamp(pitch-dy*.003,-.55,.3);touchLook={x:t.clientX,y:t.clientY};
+  },{passive:true});
+  renderer.domElement.addEventListener("touchend",()=>{touchLook=null},{passive:true});
+  document.querySelector("#mobile-interact").addEventListener("click",interact);
   document.querySelector("#start-button").addEventListener("click",()=>{started=true;startOverlay.style.display="none";renderer.domElement.requestPointerLock?.();notify("Welcome home. Your first morning starts now.")});
   document.querySelector("#reset-save").addEventListener("click",()=>{if(confirm("Start a new life? Your local MVP save will be reset.")){localStorage.removeItem("next-world-mvp-save");step=0;wallet=2500;updateMission();notify("A new life begins.")}});
   document.querySelectorAll("#mobile-controls button").forEach(button=>{
