@@ -17,6 +17,7 @@
   - Deterministic world clock with pause/time-scale and calendar rollover.
   - Validated district locations and one-way/two-way road connections.
   - Lowest-cost road pathfinding with disconnected-route handling.
+- Native Unreal world-simulation bridge source: per-world clock state, pause/time scale, validated district graph and Dijkstra routing exposed to Blueprint.
 - Dependency-free Node.js test suite and GitHub Actions workflow.
 - Open-source candidate desk audit in docs/OPEN_SOURCE_AUDIT.md.
 - No paid cloud GPU, subscription, AI API, asset or upgrade is authorised.
@@ -25,7 +26,7 @@
 
 GitHub Actions workflow: Core gameplay tests.
 
-- Latest previously completed run: https://github.com/dammyblack88-rgb/FRA-GAMES/actions/runs/44803292696 — **success**.
+- Latest previously completed run: https://github.com/dammyblack88-rgb/FRA-GAMES/actions/runs/44807563792 — **success** (documentation/status commit before the native subsystem bridge).
 - A new run covering the Unreal scaffold structural tests and world simulation tests was triggered for commit `7c3869f` and was still in progress at the time of this update: https://github.com/dammyblack88-rgb/FRA-GAMES/actions/runs/44807342618.
 - The earlier workflow run for the workflow commit also completed successfully.
 - Tests cover life creation, invalid opening rejection, save continuation, age progression, business opening, sales, stock validation, restocking, NPC daily schedules, overnight shifts, invalid/overlapping schedules, world clock rollover/pause, district validation, road neighbours and weighted route finding. Structural checks also validate the Unreal project descriptor, targets, player/GameMode source and input mappings. Latest run after the NPC overlap-validation hardening: **success**.
@@ -38,6 +39,8 @@ These are headless domain-logic tests. They do not prove that a 3D game, Unreal 
 - Native Unreal C++ project scaffold committed: `FRAGames.uproject`, Game/Editor targets, runtime module, third-person player character, camera, basic movement/jump input and prototype GameMode.
 - Unreal Engine/editor is not installed in the available environment; the new project has not been compiled or opened.
 - Native player character and camera source classes exist, but there is no compiled or visually verified 3D character yet.
+- Native `UFRAWorldSimulationSubsystem` and reflected world/road/route data structures are committed; C++ compilation and runtime parity remain unverified.
+- Structural Node tests now check that the native world subsystem API and implementation are present. This is source-structure coverage only.
 - First playable Lagos-inspired neighbourhood is scoped in `docs/FIRST_PLAYABLE_SLICE.md`; no 3D district or explorable world has been built yet.
 - No visual NPCs, traffic or crowds. NPC schedule rules exist only as engine-independent code.
 - No connected in-game business interaction or customer AI.
@@ -61,7 +64,7 @@ These two sources are approved for isolated submodule tracking only, not product
 
 1. Compile and open the committed UE 5.8 C++ scaffold on a compatible workstation.
 2. Create a small Open World test level and verify player movement, camera and jump.
-3. Connect the engine-independent world clock and district road graph to a FRA GAMES-owned Unreal subsystem.
+3. Compile and validate the new FRA GAMES-owned Unreal world subsystem, then verify parity with the engine-independent clock and district graph.
 4. Build the home-to-market greybox route and first business interaction.
 5. Compile City Form and KinetiForge in isolation; validate the Windows toolchain, runtime behavior, licence notices and performance.
 
