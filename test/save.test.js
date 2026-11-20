@@ -21,7 +21,7 @@ const fixture = () => ({
   },
   businesses: [{ id: "business-001", ownerLifeId: "life-001", cashNaira: 2500 }],
   npcStates: [{ id: "npc-001", locationId: "market", scheduleState: "working" }],
-  economy: { schemaVersion: 1, playerId: "player-001", walletNaira: 1200, items: [{ itemId: "bread", quantity: 2 }], ledger: [{ id: "player-001:opening", type: "opening-balance", amountNaira: 1200, occurredAt: "2026-11-20T18:00:00.000Z" }] },
+  economy: { schemaVersion: 1, playerId: "player-001", walletNaira: 1200, items: [{ itemId: "bread", quantity: 2 }], ledger: [{ id: "player-001:opening", type: "opening-balance", amountNaira: 1200, occurredAt: "2026-11-20T18:00:00.000Z" }] },\n  interactionState: { schemaVersion: 1, districtId: "agege-first-district", targets: [{ id: "market-npc" }], consumedTargetIds: [], events: [] },\n  missionStates: [{ schemaVersion: 1, missionId: "meet-neighbour", status: "active", startedAt: "2026-11-20T18:00:00.000Z", completedAt: null, rewardClaimed: false, objectives: [{ id: "talk", target: 1, progress: 0, completed: false }], eventHistory: [{ id: "meet-neighbour:started" }] }],
   progression: { completedMissions: [], unlocks: [] }
 });
 
@@ -33,7 +33,7 @@ test("game save creates a versioned detached snapshot of life, world and progres
   assert.equal(save.world.districtId, "agege-first-district");
   assert.equal(save.businesses[0].cashNaira, 2500);
   assert.equal(save.economy.walletNaira, 1200);
-  assert.equal(save.economy.items[0].itemId, "bread");
+  assert.equal(save.economy.items[0].itemId, "bread");\n  assert.equal(save.interactionState.targets[0].id, "market-npc");\n  assert.equal(save.missionStates[0].missionId, "meet-neighbour");
   save.player.lives[0].name = "Changed copy";
   assert.equal(input.player.lives[0].name, "Ada");
 });
@@ -89,4 +89,24 @@ test("save validation rejects invalid player economy and duplicate inventory ite
     ...save,
     economy: { ...save.economy, ledger: [{ id: "same" }, { id: "same" }] }
   }), /duplicate/);
+});
+
+test("save validation rejects interaction and mission state corruption", () => {
+  const save = fixture();
+  assert.throws(() => createGameSave({
+    ...save,
+    interactionState: { ...save.interactionState, districtId: "another-district" }
+  }), /district must match/);
+  assert.throws(() => createGameSave({
+    ...save,
+    interactionState: { ...save.interactionState, consumedTargetIds: ["unknown-target"] }
+  }), /unknown or duplicate consumed target/);
+  assert.throws(() => createGameSave({
+    ...save,
+    missionStates: [{ ...save.missionStates[0], objectives: [{ id: "talk", target: 1, progress: 2, completed: true }] }]
+  }), /mission objective progress is invalid/);
+  assert.throws(() => createGameSave({
+    ...save,
+    missionStates: [save.missionStates[0], save.missionStates[0]]
+  }), /duplicate mission id/);
 });
