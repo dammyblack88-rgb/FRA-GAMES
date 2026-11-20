@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+  <meta name="theme-color" content="#101712">
+  <meta name="description" content="NEXT WORLD — explore your first living Lagos-inspired neighbourhood.">
+  <title>NEXT WORLD — First District</title>
+  <link rel="stylesheet" href="./style.css">
+  <script type="importmap">
+    {"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js"}}
+  </script>
+</head>
+<body>
+  <main id="game-shell">
+    <div id="viewport" aria-label="Playable 3D neighbourhood"></div>
+    <header class="topbar">
+      <div class="brand"><span class="brand-mark">NW</span><div><strong>NEXT WORLD</strong><small>ONE WORLD. UNLIMITED LIVES.</small></div></div>
+      <div class="top-meta"><span id="world-clock">08:00 AM</span><span class="live-dot">WORLD LIVE</span></div>
+    </header>
+    <section class="hud">
+      <div class="mission-card">
+        <div class="eyebrow">YOUR FIRST MORNING</div>
+        <strong id="mission-title">Meet Mama Kemi</strong>
+        <p id="mission-copy">Find Mama Kemi at the market and press E to talk.</p>
+        <div class="progress-track"><span id="mission-progress"></span></div>
+      </div>
+      <div class="stats-card"><span>WALLET</span><strong id="wallet">₦2,500</strong><span>NEIGHBOURHOOD</span><strong>AGEGE DISTRICT</strong></div>
+    </section>
+    <div class="center-reticle">+</div>
+    <div id="interaction-hint" class="interaction-hint">WASD move · Mouse look · E interact</div>
+    <div id="toast" role="status" aria-live="polite"></div>
+    <div class="bottom-help"><span>W A S D <small>MOVE</small></span><span>MOUSE <small>LOOK</small></span><span>SHIFT <small>RUN</small></span><span>E <small>INTERACT</small></span><button id="reset-save" type="button">RESET LIFE</button></div>
+    <div id="start-overlay" class="overlay">
+      <div class="start-panel">
+        <div class="eyebrow">SIMEONJR STUDIOS PRESENTS</div>
+        <h1>NEXT<br><em>WORLD</em></h1>
+        <p>Your life. Your choices. One connected world.</p>
+        <div class="start-details"><span>3D FIRST DISTRICT</span><span>LAGOS, NIGERIA</span><span>EARLY MVP</span></div>
+        <button id="start-button" type="button">ENTER THE WORLD <b>→</b></button>
+        <small>Best on desktop · Click to capture mouse · Press ESC to release</small>
+      </div>
+    </div>
+    <div id="mobile-controls" aria-label="Touch movement controls">
+      <button data-key="w">▲</button><div><button data-key="a">◀</button><button data-key="s">▼</button><button data-key="d">▶</button></div>
+    </div>
+    <div id="error-panel" hidden></div>
+  </main>
+  <script type="module" src="./game.js"></script>
+</body>
+</html>
