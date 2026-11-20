@@ -15,6 +15,8 @@ class FRAGAMES_API UFRAPlayerInteractionComponent : public UActorComponent
 public:
     UFRAPlayerInteractionComponent();
 
+    virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+
     UFUNCTION(BlueprintCallable, Category="FRA|Interaction")
     bool RefreshTarget();
 
