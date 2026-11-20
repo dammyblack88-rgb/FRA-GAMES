@@ -45,11 +45,16 @@ function validateGameSave(save) {
     if (!economy || economy.schemaVersion !== 1) throw new TypeError("economy state is invalid or unsupported");
     requireText(economy.playerId, "economy.playerId");
     if (!Number.isSafeInteger(economy.walletNaira) || economy.walletNaira < 0) throw new TypeError("economy.walletNaira is invalid");
-    const items = requireRecords((economy.items ?? []).map((item, index) => ({ id: item.itemId, quantity: item.quantity, index })), "economy.items");
-    for (const item of economy.items ?? []) {
+    if (!Array.isArray(economy.items) || !Array.isArray(economy.ledger)) throw new TypeError("economy items and ledger must be arrays");
+    const itemIds = new Set();
+    for (const [index, item] of economy.items.entries()) {
+      if (!item || typeof item !== "object") throw new TypeError(`economy.items[${index}] must be an object`);
+      const itemId = requireText(item.itemId, `economy.items[${index}].itemId`);
+      if (itemIds.has(itemId)) throw new RangeError("economy.items contains duplicate item id");
+      itemIds.add(itemId);
       if (!Number.isSafeInteger(item.quantity) || item.quantity < 1) throw new TypeError("economy item quantity is invalid");
     }
-    const ledger = requireRecords(economy.ledger ?? [], "economy.ledger");
+    requireRecords(economy.ledger, "economy.ledger");
   }
   if (!save.world || typeof save.world !== "object") throw new TypeError("world state is required");
   requireText(save.world.districtId, "world.districtId");
@@ -74,6 +79,7 @@ export function createGameSave({ gameId, savedAt, player, world, businesses = []
     world: structuredClone(world),
     businesses: structuredClone(businesses),
     npcStates: structuredClone(npcStates),
+    economy: economy === null ? null : structuredClone(economy),
     progression: structuredClone(progression)
   };
   validateGameSave(snapshot);
