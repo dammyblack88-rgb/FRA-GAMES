@@ -40,6 +40,17 @@ function validateGameSave(save) {
     }
   }
   requireRecords(save.npcStates ?? [], "npcStates");
+  if (save.economy !== null && save.economy !== undefined) {
+    const economy = save.economy;
+    if (!economy || economy.schemaVersion !== 1) throw new TypeError("economy state is invalid or unsupported");
+    requireText(economy.playerId, "economy.playerId");
+    if (!Number.isSafeInteger(economy.walletNaira) || economy.walletNaira < 0) throw new TypeError("economy.walletNaira is invalid");
+    const items = requireRecords((economy.items ?? []).map((item, index) => ({ id: item.itemId, quantity: item.quantity, index })), "economy.items");
+    for (const item of economy.items ?? []) {
+      if (!Number.isSafeInteger(item.quantity) || item.quantity < 1) throw new TypeError("economy item quantity is invalid");
+    }
+    const ledger = requireRecords(economy.ledger ?? [], "economy.ledger");
+  }
   if (!save.world || typeof save.world !== "object") throw new TypeError("world state is required");
   requireText(save.world.districtId, "world.districtId");
   const clock = save.world.clock;
@@ -54,7 +65,7 @@ function validateGameSave(save) {
 }
 
 /** Create a detached, versioned snapshot; callers retain ownership of their live state. */
-export function createGameSave({ gameId, savedAt, player, world, businesses = [], npcStates = [], progression = {} }) {
+export function createGameSave({ gameId, savedAt, player, world, businesses = [], npcStates = [], economy = null, progression = {} }) {
   const snapshot = {
     schemaVersion: 1,
     gameId: requireText(gameId, "gameId"),
