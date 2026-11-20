@@ -56,14 +56,14 @@ test("creates a validated registry and rejects duplicate or unknown targets", ()
 
 test("NPC conversation emits a unique world event and requires local presence", () => {
   const result = performWorldInteraction({
-    registry: registry(), player, targetId: "mama-kemi", action: "talk",
+    registry: registry(), player, targetId: "mama-kemi", action: "talk", npcPopulation: presentNpc,
     occurredAt: at, eventId: "event-talk-1"
   });
   assert.equal(result.event.type, "npc-talked-to");
   assert.equal(result.event.payload.npcId, "mama-kemi");
   assert.throws(() => performWorldInteraction({
     registry: registry(), player: { ...player, locationId: "home" },
-    targetId: "mama-kemi", action: "talk", occurredAt: at, eventId: "event-talk-2"
+    targetId: "mama-kemi", action: "talk", npcPopulation: presentNpc, occurredAt: at, eventId: "event-talk-2"
   }), /must be at the target location/);
 });
 
@@ -129,7 +129,7 @@ test("world interactions advance matching mission objectives exactly once", () =
   });
   const mission = startMission(definition, at);
   const interaction = performWorldInteraction({
-    registry: registry(), player, targetId: "mama-kemi", action: "talk",
+    registry: registry(), player, targetId: "mama-kemi", action: "talk", npcPopulation: presentNpc,
     occurredAt: at, eventId: "event-mission-talk"
   });
   const progressed = applyWorldEventToMission(mission, interaction.event);
@@ -140,11 +140,11 @@ test("world interactions advance matching mission objectives exactly once", () =
 
 test("world event IDs cannot be replayed against the same interaction registry", () => {
   const once = performWorldInteraction({
-    registry: registry(), player, targetId: "mama-kemi", action: "talk",
+    registry: registry(), player, targetId: "mama-kemi", action: "talk", npcPopulation: presentNpc,
     occurredAt: at, eventId: "event-once"
   });
   assert.throws(() => performWorldInteraction({
-    registry: once.registry, player, targetId: "mama-kemi", action: "talk",
+    registry: once.registry, player, targetId: "mama-kemi", action: "talk", npcPopulation: presentNpc,
     occurredAt: at, eventId: "event-once"
   }), /Duplicate world event id/);
 });
