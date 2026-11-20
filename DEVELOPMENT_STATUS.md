@@ -13,6 +13,8 @@
   - Safe continuation of an existing save without resetting identity/history.
   - Age progression and event history.
   - Akara stand business model with stock, sales, cash and ledger records.
+  - Player wallet and item inventory, finite-stock shop catalogue, atomic buy/sell transactions, safe-naira arithmetic and duplicate transaction protection.
+  - Save snapshots now include optional validated player economy state (wallet, unique item quantities and transaction ledger).
   - Deterministic NPC daily schedules, location/activity resolution, overnight shifts and overlap validation.
   - Shared-clock NPC population simulation with stable identities and district-location validation.
   - First fictional Lagos district seed: eight locations, eight road links, a 50 m blockout grid and six scheduled residents.
@@ -46,6 +48,7 @@ These are headless domain-logic tests. They do not prove that a 3D game, Unreal 
 - Native `UFRAWorldSimulationSubsystem` and reflected world/road/route data structures are committed; C++ compilation and runtime parity remain unverified.
 - Versioned save snapshot logic and tests are committed in `src/core/save.js` and `test/save.test.js`; this is an in-memory schema/validation layer, not cloud or disk persistence.
 - Mission rules and tests are committed in `src/core/missions.js` and `test/missions.test.js`; no mission UI, world triggers, persistent reward ledger or multiplayer authority is connected yet.
+- Player inventory and shop transaction rules are committed in `src/core/inventory.js` with `test/inventory.test.js`; save validation includes optional economy state. These systems are not yet wired to Unreal interactions, shop UI, item pickup actors or a durable backend.
 - Structural Node tests now check that the native world subsystem API and implementation are present. This is source-structure coverage only.
 - First playable Lagos-inspired neighbourhood is scoped in `docs/FIRST_PLAYABLE_SLICE.md`; no 3D district or explorable world has been built yet.
 - No visual NPCs, traffic or crowds. NPC population/schedule rules and first-district seed content exist only as engine-independent code; no 3D actors or Unreal district level have been created.
