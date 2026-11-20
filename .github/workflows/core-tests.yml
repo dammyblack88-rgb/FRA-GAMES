@@ -16,5 +16,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22
+      - name: Check browser MVP JavaScript syntax
+        run: node --check mvp/game.js
       - name: Run dependency-free gameplay tests
         run: npm test
