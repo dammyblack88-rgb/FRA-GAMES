@@ -13,7 +13,7 @@ This is an original fictional district informed by research and reference photog
 
 ## District footprint and places
 
-Target footprint: approximately 600 m × 600 m of walkable/driveable space, divided into World Partition cells when the Unreal level is authored. The first test level may use a smaller blockout while movement and interaction are validated.
+Target footprint: approximately 600 m × 600 m of walkable/driveable space, divided into World Partition cells when the Unreal level is authored. The first test level may use a smaller blockout while movement and interaction are validated. A logical 50 m grid seed is committed in `src/content/first-district.js`; it is a planning/blockout coordinate system, not a surveyed map or a rendered Unreal level.
 
 Required places:
 1. **Player's home compound** — the character's starting point and save/resume location.
@@ -59,6 +59,8 @@ The engine-independent core now provides:
 - One-way and two-way road connections.
 - Lowest-cost logical route lookup.
 - NPC daily schedule validation and activity resolution.
+- Shared-minute population snapshots that validate resident identities and ensure all schedule locations belong to the active district.
+- A first-district seed layout with eight locations, eight logical road links and six scheduled residents.
 - Character-life state and business ledger rules.
 
 The Unreal project must treat the logical world state as authoritative; actors and meshes visualize it. Do not make the simulation depend on every NPC Actor being loaded in the level.
