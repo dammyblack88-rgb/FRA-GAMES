@@ -21,6 +21,7 @@ const fixture = () => ({
   },
   businesses: [{ id: "business-001", ownerLifeId: "life-001", cashNaira: 2500 }],
   npcStates: [{ id: "npc-001", locationId: "market", scheduleState: "working" }],
+  economy: { schemaVersion: 1, playerId: "player-001", walletNaira: 1200, items: [{ itemId: "bread", quantity: 2 }], ledger: [{ id: "player-001:opening", type: "opening-balance", amountNaira: 1200, occurredAt: "2026-11-20T18:00:00.000Z" }] },
   progression: { completedMissions: [], unlocks: [] }
 });
 
@@ -31,6 +32,8 @@ test("game save creates a versioned detached snapshot of life, world and progres
   assert.equal(save.player.activeLifeId, "life-001");
   assert.equal(save.world.districtId, "agege-first-district");
   assert.equal(save.businesses[0].cashNaira, 2500);
+  assert.equal(save.economy.walletNaira, 1200);
+  assert.equal(save.economy.items[0].itemId, "bread");
   save.player.lives[0].name = "Changed copy";
   assert.equal(input.player.lives[0].name, "Ada");
 });
@@ -70,4 +73,20 @@ test("save validation rejects invalid world clock state", () => {
     ...save,
     world: { ...save.world, clock: { ...save.world.clock, minuteOfDay: 1440 } }
   }), /world.clock is invalid/);
+});
+
+test("save validation rejects invalid player economy and duplicate inventory items", () => {
+  const save = fixture();
+  assert.throws(() => createGameSave({
+    ...save,
+    economy: { ...save.economy, walletNaira: -1 }
+  }), /economy.walletNaira/);
+  assert.throws(() => createGameSave({
+    ...save,
+    economy: { ...save.economy, items: [{ itemId: "bread", quantity: 1 }, { itemId: "bread", quantity: 2 }] }
+  }), /duplicate id/);
+  assert.throws(() => createGameSave({
+    ...save,
+    economy: { ...save.economy, ledger: [{ id: "same" }, { id: "same" }] }
+  }), /duplicate id/);
 });
