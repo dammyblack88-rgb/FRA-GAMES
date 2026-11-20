@@ -23,6 +23,13 @@ NEXT WORLD is the connected-world game identity. FRA GAMES is this existing repo
 6. **Reuse responsibly:** inspect source code, licences, dependencies, quality and compatibility before adopting any external project.
 7. **Incremental world-building:** begin with one compact, detailed Lagos-inspired district, then expand region by region.
 
+## Play the first 3D MVP
+
+A browser-playable, real-time 3D neighbourhood prototype is now in `mvp/`. It uses WebGL and a third-person character, with a small first-morning mission: talk to Mama Kemi, buy bread, and catch the community bus. It is a lightweight public MVP for early playtesting—not the final production engine or visual quality.
+
+- [MVP controls, scope and limitations](mvp/README.md)
+- [Open the deployed MVP](https://dammyblack88-rgb.github.io/FRA-GAMES/) (available after the GitHub Pages deployment workflow succeeds and Pages is enabled)
+
 ## First playable milestone
 
 A small but real Lagos-inspired district with:
@@ -37,7 +44,7 @@ A small but real Lagos-inspired district with:
 
 ## Current development state
 
-**Foundation phase with a native Unreal project scaffold.** Engine-independent life, business, NPC, mission, save-schema, economy, interaction and district/world-clock rules are implemented with a dependency-free test suite. A UE 5.8 C++ project skeleton includes a native third-person character, camera, basic keyboard/mouse movement, jump and prototype GameMode. It has not yet been compiled or opened in Unreal; no playable 3D city, NPC visuals or district exists yet.
+**Early MVP phase.** Engine-independent life, business, NPC, mission, save-schema, economy, interaction and district/world-clock rules are implemented with a dependency-free test suite. A browser-playable low-poly 3D first district is now in `mvp/`, with third-person movement, ambient NPCs and a three-step mission. A separate native Unreal Engine 5.8 C++ project scaffold is preserved for the long-term production game; it has not yet been compiled or opened in Unreal. The browser MVP is not the final Unreal game.
 
 - [Development status](DEVELOPMENT_STATUS.md)
 - [NEXT WORLD connected-universe architecture](docs/NEXT_WORLD_UNIVERSE_ARCHITECTURE.md)
