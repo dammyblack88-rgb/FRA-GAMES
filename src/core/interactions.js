@@ -160,7 +160,11 @@ export function applyWorldEventToMission(missionState, worldEvent, occurredAt = 
     .every(field => objective[field] === undefined || objective[field] === context[field]);
   const matching = missionState.objectives.some(objective =>
     objective.type === objectiveType && !objective.completed && matchesContext(objective));
-  if (!matching) return structuredClone(missionState);
+  if (!matching) {
+    const ignored = structuredClone(missionState);
+    ignored.eventHistory.push({ id: worldEvent.id, type: "world-interaction-ignored", objectiveType, occurredAt });
+    return ignored;
+  }
 
   const next = structuredClone(missionState);
   let remaining = 1;
