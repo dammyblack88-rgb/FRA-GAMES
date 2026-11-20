@@ -142,12 +142,13 @@ export function applyWorldEventToMission(missionState, worldEvent, occurredAt = 
   };
   const objectiveType = mapping[worldEvent.type];
   if (!objectiveType) return structuredClone(missionState);
-  // Dynamic import is intentionally avoided; mission state transitions stay deterministic.
-  if (!missionState || missionState.schemaVersion !== 1 || missionState.status !== "active") throw new TypeError("An active mission is required");
+  if (!missionState || missionState.schemaVersion !== 1) throw new TypeError("A supported mission state is required");
+  if (!Array.isArray(missionState.eventHistory)) throw new TypeError("Mission event history is required");
+  if (missionState.eventHistory.some(event => event.id === worldEvent.id)) throw new RangeError("Duplicate mission event id");
+  if (missionState.status !== "active") throw new TypeError("An active mission is required");
   const objectives = missionState.objectives.filter(objective => objective.type === objectiveType && !objective.completed);
   if (objectives.length === 0) return structuredClone(missionState);
   const next = structuredClone(missionState);
-  if (next.eventHistory.some(event => event.id === worldEvent.id)) throw new RangeError("Duplicate mission event id");
   let remaining = 1;
   next.objectives = next.objectives.map(objective => {
     if (objective.type !== objectiveType || objective.completed || remaining === 0) return objective;
@@ -159,7 +160,7 @@ export function applyWorldEventToMission(missionState, worldEvent, occurredAt = 
   if (next.objectives.every(objective => objective.completed)) {
     next.status = "completed";
     next.completedAt = occurredAt;
-    next.eventHistory.push({ id: `${next.missionId}:completed`, type: "mission-completed", occurredAt });
+    next.eventHistory.push({ id: `${next.runId ?? next.missionId}:completed`, type: "mission-completed", occurredAt });
   }
   return next;
 }
