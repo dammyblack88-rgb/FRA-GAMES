@@ -4,7 +4,7 @@
 **Product identity:** NEXT WORLD  
 **Repository:** `dammyblack88-rgb/FRA-GAMES`  
 **Studio:** SimeonJr Studios  
-**Overall state:** Gameplay foundation and Unreal source scaffold. **69 headless tests pass. Not yet a playable 3D game or production release.**
+**Overall state:** Gameplay foundation and Unreal source scaffold. **69 headless tests pass. Not yet a playable 3D game or production release.** Development is now explicitly cloud-first; the founder's PC must not be a required build/render host.
 
 ## Product boundary
 
@@ -13,6 +13,7 @@ NEXT WORLD is the original connected-world game IP being developed in this repos
 ## Vision and non-negotiable principles
 
 - One persistent universe, one connected character identity and life history, shared progression/economy/property and save systems.
+- **Non-negotiable presentation requirement:** the game itself is a real-time, fully 3D, explorable and playable world. 2D interfaces may be used for menus/maps, but a 2D/1D game or text simulation is not an acceptable substitute.
 - Lagos first: a fictional, researched, Lagos-inspired neighbourhood, then other Nigerian, African and international regions.
 - Life simulation, original stories, jobs, businesses, sport, entertainment, action and later creator experiences are modules in one world—not six separate games joined together.
 - New Life creates a new identity; Continue Life restores the existing one without silently resetting history.
@@ -84,19 +85,22 @@ See `docs/OPEN_SOURCE_AUDIT.md`, `docs/UPSTREAM_ENGINE_SETUP.md` and `LICENCE_AN
 - No sports career, club ownership, property construction, advanced career system, multiplayer, voice/AI runtime, creator marketplace or international map is implemented.
 - No packaged playable build or public release.
 
-## Hardware and build constraints
+## Cloud-first development and build strategy
 
-The current workstation is Intel Core i7-6700, 12 GB RAM, Intel HD Graphics 530 and a 256 GB SSD. It can support GitHub work, documentation, lightweight code and headless tests, but is not suitable for high-fidelity UE5 city authoring/rendering. Cloud-first code work does not equal access to a free high-end GPU workstation. No paid hardware or cloud spend without explicit approval.
+The founder's personal workstation is not to be a required build server, rendering machine or always-on host. GitHub is the source of truth; free GitHub Actions runs lightweight gameplay tests and repository checks; a remote Unreal-capable build service or dedicated cloud agent must compile/cook/package the native UE5 project; a temporary remote GPU workstation is reserved for editor authoring and visual playtests. The cloud service must be selected only after engine-version, storage, GPU, region, security, licensing and total-cost checks.
+
+Research candidates and the no-spend decision are recorded in `docs/CLOUD_FIRST_BUILD_STRATEGY.md`. GitHub-hosted runners are useful for lightweight CI but do not automatically include Unreal Engine 5.8, a display GPU, or enough disk for a complete engine/project cache. No free, dependable UE5.8 GPU workstation has yet been verified. No paid service, trial, top-up or cloud instance is authorised without explicit approval.
 
 ## Immediate implementation order
 
-1. Continue hardening the engine-independent gameplay rules and keep CI green.
-2. Build a real Unreal 5.8 editor level from the Open World template, place the district blockout actor and PlayerStart, then compile and verify movement/collision/camera on a compatible workstation.
-3. Create Blueprint children for the first district's actual NPCs, shop, pickups, bus stop and services.
-4. Connect the player interaction component to those actors and the first mission.
-5. Wire live gameplay state into local save/load and verify save → close/reopen → continue without loss.
-6. Add a drivable vehicle and small traffic test only after the base level is stable.
-7. Expand NPC dialogue/routines and the district's daily life before scaling the map.
+1. Keep free GitHub Actions gameplay tests and lightweight repository validation green.
+2. Establish the remote Unreal 5.8 build/editor environment without relying on the founder's PC; do not incur cost until explicitly approved.
+3. Compile the existing C++ project on that remote environment and fix real compiler errors.
+4. Create the Unreal Open World level, place the district blockout actor and PlayerStart, then verify movement, camera and collision in the actual 3D editor.
+5. Create Blueprint children for the first district's actual NPCs, shop, pickups, bus stop and services; connect the first mission.
+6. Wire live gameplay state into save/load and verify save → close/reopen → continue.
+7. Package and launch a Development build remotely; retain commit-linked logs and test evidence.
+8. Add vehicles and traffic only after the first 3D slice is stable; then expand NPC dialogue/routines and district life.
 
 ## Definition of done
 
