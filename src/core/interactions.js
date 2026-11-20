@@ -129,7 +129,7 @@ export function performWorldInteraction({
   return { player: nextPlayer, registry: nextRegistry, economy: nextEconomy, shop: nextShop, event };
 }
 
-/** Apply a world event to a matching mission objective without double-counting. */
+/** Apply a world event only to objectives whose optional authored target constraints match. */
 export function applyWorldEventToMission(missionState, worldEvent, occurredAt = worldEvent?.occurredAt) {
   record(worldEvent, "worldEvent");
   const mapping = {
@@ -144,23 +144,39 @@ export function applyWorldEventToMission(missionState, worldEvent, occurredAt = 
   if (!objectiveType) return structuredClone(missionState);
   if (!missionState || missionState.schemaVersion !== 1) throw new TypeError("A supported mission state is required");
   if (!Array.isArray(missionState.eventHistory)) throw new TypeError("Mission event history is required");
+  if (typeof worldEvent.id !== "string" || worldEvent.id.trim() === "") throw new TypeError("World event id is required");
   if (missionState.eventHistory.some(event => event.id === worldEvent.id)) throw new RangeError("Duplicate mission event id");
   if (missionState.status !== "active") throw new TypeError("An active mission is required");
-  const objectives = missionState.objectives.filter(objective => objective.type === objectiveType && !objective.completed);
-  if (objectives.length === 0) return structuredClone(missionState);
+
+  const payload = worldEvent.payload ?? {};
+  const context = {
+    targetId: worldEvent.targetId,
+    itemId: payload.itemId,
+    shopId: payload.shopId,
+    busStopId: payload.busStopId,
+    serviceId: payload.serviceId
+  };
+  const matchesContext = objective => ["targetId", "itemId", "shopId", "busStopId", "serviceId"]
+    .every(field => objective[field] === undefined || objective[field] === context[field]);
+  const matching = missionState.objectives.some(objective =>
+    objective.type === objectiveType && !objective.completed && matchesContext(objective));
+  if (!matching) return structuredClone(missionState);
+
   const next = structuredClone(missionState);
   let remaining = 1;
   next.objectives = next.objectives.map(objective => {
-    if (objective.type !== objectiveType || objective.completed || remaining === 0) return objective;
+    if (objective.type !== objectiveType || objective.completed || remaining === 0 || !matchesContext(objective)) return objective;
     remaining -= 1;
     const progress = objective.progress + 1;
     return { ...objective, progress, completed: progress >= objective.target };
   });
   next.eventHistory.push({ id: worldEvent.id, type: "world-interaction", objectiveType, occurredAt });
   if (next.objectives.every(objective => objective.completed)) {
+    const completionEventId = `${next.runId ?? next.missionId}:completed`;
+    if (next.eventHistory.some(event => event.id === completionEventId)) throw new RangeError("Mission completion event id already exists");
     next.status = "completed";
     next.completedAt = occurredAt;
-    next.eventHistory.push({ id: `${next.runId ?? next.missionId}:completed`, type: "mission-completed", occurredAt });
+    next.eventHistory.push({ id: completionEventId, type: "mission-completed", occurredAt });
   }
   return next;
 }
