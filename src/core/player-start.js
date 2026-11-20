@@ -1,6 +1,7 @@
 import { createWorldIdentity, registerWorldExperience } from "./identity.js";
 import { createLife } from "./life.js";
 import { validatePlayerCharacter } from "./character-creator.js";
+import { createGameSave } from "./save.js";
 
 function requireText(value, field) {
   if (typeof value !== "string" || value.trim() === "") {
@@ -95,4 +96,47 @@ export function validatePlayerStart(start) {
     throw new RangeError("Player start location must match the character profile");
   }
   return true;
+}
+
+/**
+ * Build a normal game save from a completed character start.
+ * Existing save fields remain available; identity and character are additive.
+ */
+export function createPlayerStartGameSave({
+  playerStart,
+  savedAt,
+  world,
+  businesses = [],
+  npcStates = [],
+  economy = null,
+  interactionState = null,
+  missionStates = [],
+  progression = { experience: 0, completedMissionIds: [], unlocks: [] }
+}) {
+  validatePlayerStart(playerStart);
+  if (!world || typeof world !== "object" || Array.isArray(world)) {
+    throw new TypeError("world state is required");
+  }
+  if (world.districtId !== playerStart.startingPoint.districtId) {
+    throw new RangeError("World district must match the selected player starting district");
+  }
+  const life = structuredClone(playerStart.life);
+  return createGameSave({
+    gameId: playerStart.gameId,
+    savedAt,
+    player: {
+      activeLifeId: life.id,
+      lives: [life],
+      identity: structuredClone(playerStart.identity),
+      character: structuredClone(playerStart.character),
+      startingPoint: structuredClone(playerStart.startingPoint)
+    },
+    world,
+    businesses,
+    npcStates,
+    economy,
+    interactionState,
+    missionStates,
+    progression
+  });
 }
