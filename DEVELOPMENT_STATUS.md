@@ -32,9 +32,9 @@
 
 GitHub Actions workflow: Core gameplay tests.
 
-- Latest completed run: https://github.com/dammyblack88-rgb/FRA-GAMES/actions/runs/44813774633 — **success** for commit `40ec01bb0fc94c4e2e2a308899336ce7bfadf8ad`.
-- Result: **54 tests passed, 0 failed**.
-- Coverage includes life creation/continuation, business rules, inventory transactions, save validation, NPC schedules and population, world interactions, mission event bridging, seeded district content, Unreal project structure and engine-independent world routing.
+- Latest completed run: https://github.com/dammyblack88-rgb/FRA-GAMES/actions/runs/44814138832 — **success** for commit `0fab53be60acfc0ee43a879a5488f27a5d0570e7`.
+- Result: **55 tests passed, 0 failed**.
+- Coverage includes life creation/continuation, business rules, inventory transactions, save validation including economy, consumed interaction targets, world-event history and mission progress, NPC schedules and population, world interactions, mission event bridging, seeded district content, Unreal project structure and engine-independent world routing.
 - These are headless JavaScript domain and source-structure tests. They do not prove that Unreal C++ compiles, the editor opens, a 3D world renders or a packaged game is playable.
 
 ## Not yet implemented
