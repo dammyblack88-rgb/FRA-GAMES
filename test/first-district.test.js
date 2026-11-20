@@ -3,6 +3,8 @@ import assert from "node:assert/strict";
 import { createFirstDistrict, firstDistrictLayout, firstDistrictResidents } from "../src/content/first-district.js";
 import { findRoadPath } from "../src/core/world.js";
 import { simulateNpcPopulation } from "../src/core/npc.js";
+import { createFirstDistrictInteractionRegistry } from "../src/content/first-district-interactions.js";
+import { performWorldInteraction } from "../src/core/interactions.js";
 
 test("first Lagos district creates a connected logical neighbourhood blockout", () => {
   const district = createFirstDistrict();
@@ -32,4 +34,21 @@ test("first district resident schedules only reference places in the district", 
     assert.ok(validIds.has(resident.defaultLocationId));
     for (const activity of resident.schedule) assert.ok(validIds.has(activity.locationId));
   }
+});
+
+test("seeded Mama Kemi can be talked to when her shared-clock schedule places her at the market", () => {
+  const district = createFirstDistrict();
+  const registry = createFirstDistrictInteractionRegistry(district);
+  const npcPopulation = simulateNpcPopulation(firstDistrictResidents, district, 12 * 60);
+  const result = performWorldInteraction({
+    registry,
+    player: { id: "player-first-slice", locationId: "neighbourhood-market" },
+    targetId: "resident-mama-kemi",
+    action: "talk",
+    npcPopulation,
+    occurredAt: "2026-11-20T12:00:00.000Z",
+    eventId: "first-slice-talk-to-mama-kemi"
+  });
+  assert.equal(result.event.type, "npc-talked-to");
+  assert.equal(result.event.payload.npcId, "resident-mama-kemi");
 });
