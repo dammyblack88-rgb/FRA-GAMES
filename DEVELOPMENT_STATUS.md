@@ -114,3 +114,5 @@ Every feature must include:
 - Reusable native Blueprint interaction actor added: `AFRAWorldInteractableActor` provides a mesh slot, prompt, enabled/range validation and a Blueprint event for actor-specific responses. Still requires Blueprint children for the district's NPCs, pickups, shops, transport and services.
 
 - Procedural first-district blockout actor source added: `AFRAFirstDistrictBlockout` creates a 300 m × 300 m ground plane, the eight seed road corridors and blockout masses for the first seven district locations using Unreal's built-in cube mesh. See [docs/FIRST_DISTRICT_BLOCKOUT.md](docs/FIRST_DISTRICT_BLOCKOUT.md). It is not yet placed in a level or compiled/tested in Unreal.
+
+- Added the first authored district mission, "Your First Morning": talk to Mama Kemi, buy provisions and take a bus ride. A headless integration test drives the actual seeded NPC population, interaction registry, finite-stock shop, mission bridge and one-time wallet/XP reward. The test suite is now 65 passed, 0 failed (GitHub Actions run 44817441068).
