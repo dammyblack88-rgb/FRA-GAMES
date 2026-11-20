@@ -1,7 +1,7 @@
 # FRA GAMES — Development Status
 
 **Last updated:** 2026-11-20  
-**Overall state:** Foundation phase. Core logic tests pass. Not a playable 3D game. Not production-ready.
+**Overall state:** Foundation phase. 60 headless gameplay tests pass. Not a playable 3D game. Not production-ready.
 
 ## Confirmed and committed
 
@@ -13,8 +13,12 @@
   - Safe continuation of an existing save without resetting identity/history.
   - Age progression and event history.
   - Akara stand business model with stock, sales, cash and ledger records.
-  - Player wallet and item inventory, finite-stock shop catalogue, atomic buy/sell transactions, safe-naira arithmetic and duplicate transaction protection.\n  - Local interaction registry for scheduled NPC conversations, one-time item pickups, shop trading, authored bus-stop destinations and service interactions.\n  - World interaction events with duplicate-event protection and a mission-objective bridge for talk, pickup, travel, service and trade objectives.\n  - First-district interaction seed: Mama Kemi, provision stall, dropped bread, community bus stop, clinic and workshop service points.
-  - Save snapshots now include optional validated player economy state (wallet, unique item quantities and transaction ledger).\n  - Save snapshots now preserve the interaction registry (consumed pickups and world event history) and mission objective progress with duplicate-ID, district and objective-bound validation.
+  - Player wallet and item inventory, finite-stock shop catalogue, atomic buy/sell transactions, safe-naira arithmetic and duplicate transaction protection.
+  - Local interaction registry for scheduled NPC conversations, one-time item pickups, shop trading, authored bus-stop destinations and service interactions.
+  - World interaction events with duplicate-event protection and a mission-objective bridge for talk, pickup, travel, service and trade objectives.
+  - First-district interaction seed: Mama Kemi, provision stall, dropped bread, community bus stop, clinic and workshop service points.
+  - Save snapshots now include optional validated player economy state (wallet, unique item quantities and transaction ledger).
+  - Save snapshots now preserve the interaction registry (consumed pickups and world event history) and mission objective progress with duplicate-ID, district and objective-bound validation.
   - Deterministic NPC daily schedules, location/activity resolution, overnight shifts and overlap validation.
   - Shared-clock NPC population simulation with stable identities and district-location validation.
   - First fictional Lagos district seed: eight locations, eight road links, a 50 m blockout grid and six scheduled residents.
@@ -32,8 +36,8 @@
 
 GitHub Actions workflow: Core gameplay tests.
 
-- Latest completed run: https://github.com/dammyblack88-rgb/FRA-GAMES/actions/runs/44814138832 — **success** for commit `0fab53be60acfc0ee43a879a5488f27a5d0570e7`.
-- Result: **55 tests passed, 0 failed**.
+- Latest completed run: https://github.com/dammyblack88-rgb/FRA-GAMES/actions/runs/44815982204 — **success** for commit `0d9e8828deffae0ef1ce1a5ef2adfc4b48326073`.
+- Result: **60 tests passed, 0 failed**.
 - Coverage includes life creation/continuation, business rules, inventory transactions, save validation including economy, consumed interaction targets, world-event history and mission progress, NPC schedules and population, world interactions, mission event bridging, seeded district content, Unreal project structure and engine-independent world routing.
 - These are headless JavaScript domain and source-structure tests. They do not prove that Unreal C++ compiles, the editor opens, a 3D world renders or a packaged game is playable.
 
@@ -45,12 +49,14 @@ GitHub Actions workflow: Core gameplay tests.
 - Native player character and camera source classes exist, but there is no compiled or visually verified 3D character yet.
 - Native `UFRAWorldSimulationSubsystem` and reflected world/road/route data structures are committed; C++ compilation and runtime parity remain unverified.
 - Versioned save snapshot logic and tests are committed in `src/core/save.js` and `test/save.test.js`; this is an in-memory schema/validation layer, not cloud or disk persistence.
-- Mission rules and tests are committed in `src/core/missions.js` and `test/missions.test.js`; no mission UI, world triggers, persistent reward ledger or multiplayer authority is connected yet.
-- Player inventory and shop transaction rules are committed in `src/core/inventory.js` with `test/inventory.test.js`; save validation includes optional economy state.\n- Engine-independent interaction contracts are committed in `src/core/interactions.js` with `test/interactions.test.js`; first-district targets and shop stock are seeded in `src/content/first-district-interactions.js`. These are tested domain rules only—not Unreal interaction components, dialogue UI, item pickup actors, bus vehicle simulation or a durable backend.\n- Interaction and mission state are now represented in the versioned in-memory save snapshot. Durable disk/cloud storage and mission reward-to-wallet integration remain outstanding.
+- Mission rules and tests are committed in `src/core/missions.js` and `test/missions.test.js`. Mission rewards now have an engine-independent atomic integration that marks the reward claimed, credits the player wallet ledger and experience progression with run-scoped duplicate protection. No mission UI, Unreal world triggers, durable backend or multiplayer authority is connected yet.
+- Player inventory and shop transaction rules are committed in `src/core/inventory.js` with `test/inventory.test.js`; save validation includes optional economy state.
+- Engine-independent interaction contracts are committed in `src/core/interactions.js` with `test/interactions.test.js`; first-district targets and shop stock are seeded in `src/content/first-district-interactions.js`. These are tested domain rules only—not Unreal interaction components, dialogue UI, item pickup actors, bus vehicle simulation or a durable backend.
+- Interaction and mission state are represented in the versioned in-memory save snapshot, including repeatable mission runs and validated shared experience progression. Durable disk/cloud storage remains outstanding.
 - Structural Node tests now check that the native world subsystem API and implementation are present. This is source-structure coverage only.
 - First playable Lagos-inspired neighbourhood is scoped in `docs/FIRST_PLAYABLE_SLICE.md`; no 3D district or explorable world has been built yet.
 - No visual NPCs, traffic or crowds. NPC population/schedule rules and first-district seed content exist only as engine-independent code; no 3D actors or Unreal district level have been created.
-- No connected in-game business interaction or customer AI.
+- No Unreal-connected in-game business interaction, visible customer AI or production traffic simulation.
 - No production save backend or UI.
 - No multiplayer or creator tools.
 - Two upstream repositories are pinned as Git submodules (not merged into core): City Form at `ThirdParty/CityForm` and KinetiForge Vehicles at `Plugins/KinetiForgeVehicles`. They have not yet been compiled, enabled or validated inside a FRA GAMES Unreal project.
@@ -89,3 +95,14 @@ Every feature must include:
 - Test performed and result.
 - Known limitations.
 - Licence/source notes for imported code or assets.
+
+
+## NEXT WORLD product identity and latest increment
+
+- The established game-universe identity is **NEXT WORLD**. FRA GAMES remains the GitHub repository and development workspace.
+- The product architecture is one persistent universe with shared character identity, life history, progression, economy, property and saves; careers and modes are experience layers, not separate games.
+- Architecture: [docs/NEXT_WORLD_UNIVERSE_ARCHITECTURE.md](docs/NEXT_WORLD_UNIVERSE_ARCHITECTURE.md).
+- Mission runs have distinct run IDs. Atomic reward application updates wallet ledger, experience progression and reward-claimed state as one pure state transition; duplicate ledger transactions are rejected.
+- Save validation supports multiple runs of the same mission while rejecting duplicate run IDs and inconsistent completed-objective state.
+- The first-district integration test now verifies Mama Kemi can be spoken to when the shared NPC schedule places her at the market.
+- Latest verified CI: 60 tests passed, 0 failed (run 44815982204). This remains headless JavaScript and source-structure coverage only; Unreal C++ compilation, editor launch, 3D rendering and packaged gameplay are not verified.
