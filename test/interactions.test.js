@@ -135,7 +135,7 @@ test("world interactions advance matching mission objectives exactly once", () =
   const progressed = applyWorldEventToMission(mission, interaction.event);
   assert.equal(progressed.status, "completed");
   assert.equal(progressed.objectives[0].progress, 1);
-  assert.throws(() => applyWorldEventToMission(progressed, interaction.event), /active mission/);
+  assert.throws(() => applyWorldEventToMission(progressed, interaction.event), /Duplicate mission event/);
 });
 
 test("world event IDs cannot be replayed against the same interaction registry", () => {
