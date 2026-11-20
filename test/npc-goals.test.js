@@ -41,6 +41,7 @@ test("matching world events advance and complete an NPC goal", () => {
       eventId: "training-" + index,
       npcId: "resident-01",
       action: "train_football",
+      targetId: "community-pitch",
       occurredAt: at
     });
     state = result.state;
