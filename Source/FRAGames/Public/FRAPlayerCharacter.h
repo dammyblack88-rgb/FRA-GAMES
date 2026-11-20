@@ -6,11 +6,9 @@
 
 class UCameraComponent;
 class USpringArmComponent;
+class UFRAPlayerInteractionComponent;
 
-/**
- * First native player controller body for the FRA GAMES prototype.
- * Input mappings are configured in Config/DefaultInput.ini.
- */
+/** First native player character for the NEXT WORLD prototype. */
 UCLASS()
 class FRAGAMES_API AFRAPlayerCharacter : public ACharacter
 {
@@ -26,11 +24,15 @@ protected:
     void MoveRight(float Value);
     void Turn(float Value);
     void LookUp(float Value);
+    void Interact();
 
 private:
-    UPROPERTY(VisibleAnywhere, Category = "Camera")
+    UPROPERTY(VisibleAnywhere, Category="Camera")
     TObjectPtr<USpringArmComponent> CameraBoom;
 
-    UPROPERTY(VisibleAnywhere, Category = "Camera")
+    UPROPERTY(VisibleAnywhere, Category="Camera")
     TObjectPtr<UCameraComponent> FollowCamera;
+
+    UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="FRA|Interaction", meta=(AllowPrivateAccess="true"))
+    TObjectPtr<UFRAPlayerInteractionComponent> InteractionComponent;
 };
