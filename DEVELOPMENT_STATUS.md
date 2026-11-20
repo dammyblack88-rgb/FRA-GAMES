@@ -106,3 +106,5 @@ Every feature must include:
 - Save validation supports multiple runs of the same mission while rejecting duplicate run IDs and inconsistent completed-objective state.
 - The first-district integration test now verifies Mama Kemi can be spoken to when the shared NPC schedule places her at the market.
 - Latest verified CI: 60 tests passed, 0 failed (run 44815982204). This remains headless JavaScript and source-structure coverage only; Unreal C++ compilation, editor launch, 3D rendering and packaged gameplay are not verified.
+
+- Native Unreal player interaction source has been added: Blueprint interaction interface, player-owned camera trace component, contextual prompt/target-change API, periodic target refresh and E-key dispatch. See [docs/UNREAL_INTERACTION_BRIDGE.md](docs/UNREAL_INTERACTION_BRIDGE.md). This source is not yet compiled or runtime-tested.
