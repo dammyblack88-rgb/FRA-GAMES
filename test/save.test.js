@@ -58,7 +58,7 @@ test("save validation rejects interaction and mission state corruption", () => {
   assert.throws(() => createGameSave({ ...save, interactionState: { ...save.interactionState, districtId: "another-district" } }), /district must match/);
   assert.throws(() => createGameSave({ ...save, interactionState: { ...save.interactionState, consumedTargetIds: ["unknown-target"] } }), /unknown or duplicate consumed target/);
   assert.throws(() => createGameSave({ ...save, missionStates: [{ ...save.missionStates[0], objectives: [{ id: "talk", type: "talk-to-npc", target: 1, progress: 2, completed: true }] }] }), /mission objective progress is invalid/);
-  assert.throws(() => createGameSave({ ...save, missionStates: [save.missionStates[0], save.missionStates[0]] }), /duplicate mission id/);
+  assert.throws(() => createGameSave({ ...save, missionStates: [save.missionStates[0], save.missionStates[0]] }), /duplicate mission run id/);
 });
 test("save supports separate playthroughs of the same mission but rejects duplicate run IDs", () => {
   const save = fixture();
