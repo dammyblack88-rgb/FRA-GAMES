@@ -104,3 +104,15 @@ test("reusable Unreal interactable actor exposes Blueprint interaction behavior"
   assert.match(source, /CanInteract_Implementation/);
   assert.match(source, /ReceiveInteraction\(InteractingActor\)/);
 });
+
+test("first Lagos district has a procedural Unreal greybox builder using the engine cube mesh", () => {
+  assert.ok(existsSync(new URL("../Source/FRAGames/Public/FRAFirstDistrictBlockout.h", import.meta.url)));
+  assert.ok(existsSync(new URL("../Source/FRAGames/Private/FRAFirstDistrictBlockout.cpp", import.meta.url)));
+  const source = read("Source/FRAGames/Private/FRAFirstDistrictBlockout.cpp");
+  assert.match(source, /BasicShapes\/Cube\.Cube/);
+  assert.match(source, /OnConstruction/);
+  assert.match(source, /DistrictGround/);
+  assert.match(source, /NeighbourhoodMarket/);
+  assert.match(source, /WorkshopGarage/);
+  assert.match(source, /RoadWidth/);
+});
