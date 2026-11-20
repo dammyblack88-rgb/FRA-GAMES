@@ -49,7 +49,7 @@ export function recordMissionProgress(state, objectiveType, amount, occurredAt, 
     const progress = objective.progress + added;
     return { ...objective, progress, completed: progress >= objective.target };
   });
-  if (!objectives.some(objective => objective.type === objectiveType && !objective.completed)) return clone(state);
+  if (!state.objectives.some(objective => objective.type === objectiveType && !objective.completed)) return clone(state);
   const allComplete = objectives.every(objective => objective.completed);
   const runId = state.runId ?? state.missionId;
   return { ...clone(state), objectives, status: allComplete ? "completed" : "active",
