@@ -58,6 +58,17 @@ struct FRAGAMES_API FFRASavedMissionObjective
 };
 
 USTRUCT(BlueprintType)
+struct FRAGAMES_API FFRASavedEconomyTransaction
+{
+    GENERATED_BODY()
+    UPROPERTY(SaveGame, EditAnywhere, BlueprintReadWrite, Category="FRA|Save") FString TransactionId;
+    UPROPERTY(SaveGame, EditAnywhere, BlueprintReadWrite, Category="FRA|Save") FName TransactionType;
+    UPROPERTY(SaveGame, EditAnywhere, BlueprintReadWrite, Category="FRA|Save") int64 AmountNaira = 0;
+    UPROPERTY(SaveGame, EditAnywhere, BlueprintReadWrite, Category="FRA|Save") int64 Experience = 0;
+    UPROPERTY(SaveGame, EditAnywhere, BlueprintReadWrite, Category="FRA|Save") FDateTime OccurredAt;
+};
+
+USTRUCT(BlueprintType)
 struct FRAGAMES_API FFRASavedMissionRun
 {
     GENERATED_BODY()
@@ -69,6 +80,7 @@ struct FRAGAMES_API FFRASavedMissionRun
     UPROPERTY(SaveGame, EditAnywhere, BlueprintReadWrite, Category="FRA|Save") bool bHasCompletedAt = false;
     UPROPERTY(SaveGame, EditAnywhere, BlueprintReadWrite, Category="FRA|Save") bool bRewardClaimed = false;
     UPROPERTY(SaveGame, EditAnywhere, BlueprintReadWrite, Category="FRA|Save") TArray<FFRASavedMissionObjective> Objectives;
+    UPROPERTY(SaveGame, EditAnywhere, BlueprintReadWrite, Category="FRA|Save") TArray<FString> EventIds;
 };
 
 /** Versioned local player snapshot. Online authoritative persistence is a later layer. */
@@ -88,6 +100,7 @@ public:
     UPROPERTY(SaveGame, EditAnywhere, BlueprintReadWrite, Category="FRA|Save") int64 WalletNaira = 0;
     UPROPERTY(SaveGame, EditAnywhere, BlueprintReadWrite, Category="FRA|Save") int64 Experience = 0;
     UPROPERTY(SaveGame, EditAnywhere, BlueprintReadWrite, Category="FRA|Save") TArray<FFRASavedItemStack> Inventory;
+    UPROPERTY(SaveGame, EditAnywhere, BlueprintReadWrite, Category="FRA|Save") TArray<FFRASavedEconomyTransaction> EconomyTransactions;
     UPROPERTY(SaveGame, EditAnywhere, BlueprintReadWrite, Category="FRA|Save") TArray<FFRASavedBusinessRecord> Businesses;
     UPROPERTY(SaveGame, EditAnywhere, BlueprintReadWrite, Category="FRA|Save") TArray<FFRASavedNpcState> NpcStates;
     UPROPERTY(SaveGame, EditAnywhere, BlueprintReadWrite, Category="FRA|Save") TArray<FFRASavedMissionRun> MissionRuns;
