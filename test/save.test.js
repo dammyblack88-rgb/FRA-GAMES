@@ -21,7 +21,9 @@ const fixture = () => ({
   },
   businesses: [{ id: "business-001", ownerLifeId: "life-001", cashNaira: 2500 }],
   npcStates: [{ id: "npc-001", locationId: "market", scheduleState: "working" }],
-  economy: { schemaVersion: 1, playerId: "player-001", walletNaira: 1200, items: [{ itemId: "bread", quantity: 2 }], ledger: [{ id: "player-001:opening", type: "opening-balance", amountNaira: 1200, occurredAt: "2026-11-20T18:00:00.000Z" }] },\n  interactionState: { schemaVersion: 1, districtId: "agege-first-district", targets: [{ id: "market-npc" }], consumedTargetIds: [], events: [] },\n  missionStates: [{ schemaVersion: 1, missionId: "meet-neighbour", status: "active", startedAt: "2026-11-20T18:00:00.000Z", completedAt: null, rewardClaimed: false, objectives: [{ id: "talk", target: 1, progress: 0, completed: false }], eventHistory: [{ id: "meet-neighbour:started" }] }],
+  economy: { schemaVersion: 1, playerId: "player-001", walletNaira: 1200, items: [{ itemId: "bread", quantity: 2 }], ledger: [{ id: "player-001:opening", type: "opening-balance", amountNaira: 1200, occurredAt: "2026-11-20T18:00:00.000Z" }] },
+  interactionState: { schemaVersion: 1, districtId: "agege-first-district", targets: [{ id: "market-npc" }], consumedTargetIds: [], events: [] },
+  missionStates: [{ schemaVersion: 1, missionId: "meet-neighbour", status: "active", startedAt: "2026-11-20T18:00:00.000Z", completedAt: null, rewardClaimed: false, objectives: [{ id: "talk", target: 1, progress: 0, completed: false }], eventHistory: [{ id: "meet-neighbour:started" }] }],
   progression: { completedMissions: [], unlocks: [] }
 });
 
