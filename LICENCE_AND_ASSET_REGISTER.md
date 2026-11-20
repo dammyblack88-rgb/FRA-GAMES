@@ -38,8 +38,8 @@ Before accepting outside contributions, define contributor permission and owners
 
 | Candidate | Source | Stated terms | Review status | FRA GAMES decision |
 |---|---|---|---|---|
-| City Form | https://github.com/JonathanWMorris/city-form | MIT code; Unreal separately licensed | README and licence statement reviewed | Architecture reference only; UE5.8 source-first pre-alpha; Windows not yet verified |
-| KinetiForge Vehicle System | https://github.com/myoozy/KinetiForge-Vehicle-System | MIT | README and licence statement reviewed | Preferred vehicle plugin candidate for later UE compatibility test; inspect dependencies/assets before import |
+| City Form | https://github.com/JonathanWMorris/city-form | MIT code; Unreal separately licensed | README and MIT licence reviewed; pinned submodule commit `90810c86099a6e904d6a2e3bf17886aeb1b70fc5` | Isolated submodule at `ThirdParty/CityForm`; UE 5.8 project, pre-alpha city-simulation reference; not a complete game and not yet compiled in FRA GAMES |
+| KinetiForge Vehicle System | https://github.com/myoozy/KinetiForge-Vehicle-System | MIT | README and MIT licence reviewed; pinned submodule commit `7b918afa47e824f21eac3a6dfd3543979cc37ab5` | Isolated plugin submodule at `Plugins/KinetiForgeVehicles`; UE 5.8 compatibility for this revision is unverified; compile/runtime test required before enabling |
 | ALIS | https://github.com/fallintodusk/alis | Component policy: MPL-2.0, AGPL-3.0-only, Apache-2.0, and separate asset/data terms | Licence policy and README reviewed | Architecture reference only; no copying until component-specific licence review |
 | GT-Caliber | https://github.com/yangzhen02/GT-caliber | MIT game code; CC BY 4.0 for specified first-party assets; third-party asset submodule has separate terms | README and asset access notes reviewed | Not selected as base; main art submodule is private/gated and not included in public source tree |
 | Unreal Open World Starter | https://github.com/GameFusi/Unreal-Open-World-Starter | Apache-2.0 project; bundled components retain their own licences | README and stated licence reviewed | Framework reference only; no blind bundle import |
