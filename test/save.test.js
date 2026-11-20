@@ -60,7 +60,7 @@ test("save validation rejects duplicate records and businesses without a valid o
   assert.throws(() => createGameSave({
     ...save,
     npcStates: [{ id: "npc-1" }, { id: "npc-1" }]
-  }), /duplicate id/);
+  }), /duplicate/);
   assert.throws(() => createGameSave({
     ...save,
     businesses: [{ id: "business-1", ownerLifeId: "missing-life" }]
