@@ -110,3 +110,5 @@ Every feature must include:
 - Native Unreal player interaction source has been added: Blueprint interaction interface, player-owned camera trace component, contextual prompt/target-change API, periodic target refresh and E-key dispatch. See [docs/UNREAL_INTERACTION_BRIDGE.md](docs/UNREAL_INTERACTION_BRIDGE.md). This source is not yet compiled or runtime-tested.
 
 - Native Unreal local save foundation added: versioned USaveGame data model plus a GameInstanceSubsystem for validated SaveToSlot/LoadFromSlot, covering life identity, district/clock, economy, businesses, NPC snapshots, mission runs/events and consumed interactions. See [docs/UNREAL_SAVE_BRIDGE.md](docs/UNREAL_SAVE_BRIDGE.md). It is not yet wired to live gameplay and is not compiled or runtime-tested.
+
+- Reusable native Blueprint interaction actor added: `AFRAWorldInteractableActor` provides a mesh slot, prompt, enabled/range validation and a Blueprint event for actor-specific responses. Still requires Blueprint children for the district's NPCs, pickups, shops, transport and services.
