@@ -60,7 +60,7 @@ function boot() {
   for(const z of [-9,9]) box("pavement",0,.08,z,220,.16,3,materials.concrete,false);
   for(const x of [-9,9]) box("pavement",x,.08,0,3,.16,220,materials.concrete,false);
 
-  function building(name,x,z,w,d,h,color,roofColor=materials.roof) {
+  const obstacles=[];\n  function building(name,x,z,w,d,h,color,roofColor=materials.roof) {\n    obstacles.push({x,z,halfW:w/2+.8,halfD:d/2+.8});
     box(name,x,h/2,z,w,h,d,mat(color));
     box(name+" roof",x,h+.16,z,w+.5,.32,d+.5,roofColor);
     for(let y=2.2;y<h-1;y+=2.6){
@@ -102,7 +102,7 @@ function boot() {
   box("bus shelter",-4,1.7,-24,7,.25,3,materials.blue);
   box("bus shelter roof", -4,3.5,-24,8,.3,4,materials.rust);
   for(const x of [-7,-1]) box("shelter support",x,1.7,-24,.18,3.4,.18,materials.dark);
-  const bus=box("danfo bus",3,1.45,-27,7,2.7,3.1,materials.yellow);
+  const bus=box("danfo bus",3,1.45,-27,7,2.7,3.1,materials.yellow);\n  obstacles.push({x:3,z:-27,halfW:4.2,halfD:2.2});
   box("bus windscreen",3,2,-28.58,3.2,1.05,.06,materials.blue,false);
   for(const x of [0.8,5.2]) for(const z of [-28, -26]) {
     const wheel=new THREE.Mesh(new THREE.CylinderGeometry(.58,.58,.25,12),materials.dark);
