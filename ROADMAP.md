@@ -8,8 +8,8 @@ This roadmap is a sequence of evidence-based milestones. Dates are not promised 
 - [x] Establish licensing and asset tracking rules.
 - [x] Desk-audit candidate open-source projects and licences; see docs/OPEN_SOURCE_AUDIT.md.
 - [x] Implement initial engine-independent life and business rules with automated tests.
-- [ ] Choose and document the initial engine/toolchain after compatibility review.
-- [ ] Define acceptance tests for the first 3D vertical slice.
+- [x] Select and document UE 5.8 as the initial engine target; upstream compatibility validation remains pending.
+- [x] Define acceptance tests for the first 3D vertical slice in docs/FIRST_PLAYABLE_SLICE.md.
 - [ ] Verify a reproducible Unreal build on the future target workstation.
 
 **Exit condition:** a defensible technical plan, verified dependencies and a reproducible development setup.
