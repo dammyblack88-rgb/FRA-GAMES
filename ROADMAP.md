@@ -6,9 +6,11 @@ This roadmap is a sequence of evidence-based milestones. Dates are not promised 
 - [x] Establish project repository.
 - [x] Record initial product vision and architecture.
 - [x] Establish licensing and asset tracking rules.
-- [ ] Audit candidate open-source projects and licences.
+- [x] Desk-audit candidate open-source projects and licences; see docs/OPEN_SOURCE_AUDIT.md.
+- [x] Implement initial engine-independent life and business rules with automated tests.
 - [ ] Choose and document the initial engine/toolchain after compatibility review.
-- [ ] Define the first vertical-slice acceptance tests.
+- [ ] Define acceptance tests for the first 3D vertical slice.
+- [ ] Verify a reproducible Unreal build on the future target workstation.
 
 **Exit condition:** a defensible technical plan, verified dependencies and a reproducible development setup.
 
