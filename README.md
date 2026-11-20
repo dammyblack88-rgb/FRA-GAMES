@@ -55,6 +55,12 @@ A small but real Lagos-inspired district with:
 - [Open-source candidate audit](docs/OPEN_SOURCE_AUDIT.md)
 - [Licence and asset register](LICENCE_AND_ASSET_REGISTER.md)
 
+## NPC autonomy milestone
+
+The current feature branch adds a deterministic goal-execution layer: accepted NPC ideas become concrete action goals, and goals progress only when matching, target-aware world events are emitted. This is a gameplay-core contract; it is not yet connected to live NPC movement, navigation or the rendered 3D MVP.
+
+- [NPC goal execution foundation](docs/NPC_GOAL_EXECUTION_FOUNDATION.md)
+
 ## Engine and upstream projects
 
 The first Unreal integration target is **Unreal Engine 5.8**. Two reviewed upstream repositories are pinned as Git submodules: City Form (city simulation/roads/zoning reference) and KinetiForge Vehicles (candidate vehicle-physics plugin). They are isolated and are not yet compiled or enabled in a playable NEXT WORLD build.
