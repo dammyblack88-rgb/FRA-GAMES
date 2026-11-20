@@ -22,10 +22,13 @@ test("creator work begins as a private draft and is not published automatically"
 });
 
 test("validates a draft and requires evidence for licensed assets", () => {
-  const draft = createCreatorContentDraft({ ...base, assets: [{ id: "asset-lic", rightsStatus: "licensed" }] });
-  assert.equal(validateCreatorContent(draft).passed, false);
-  assert.ok(validateCreatorContent(draft).issues.includes("asset-rights-evidence-missing"));
-  assert.throws(() => createCreatorContentDraft({ ...base, assets: [{ id: "asset-lic", rightsStatus: "licensed" }] }), /rightsEvidence/);
+  assert.throws(() => createCreatorContentDraft({
+    ...base, assets: [{ id: "asset-lic", rightsStatus: "licensed" }]
+  }), /rightsEvidence/);
+  const draft = createCreatorContentDraft({
+    ...base, assets: [{ id: "asset-lic", rightsStatus: "licensed", rightsEvidence: "licence-record-001" }]
+  });
+  assert.equal(validateCreatorContent(draft).passed, true);
 });
 
 test("content must pass validation and moderation before publishing", () => {
