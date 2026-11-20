@@ -38,10 +38,12 @@ export function validateNpcSchedule(schedule) {
   }
 
   segments.sort((a, b) => a.start - b.start);
-  for (let i = 1; i < segments.length; i += 1) {
-    if (segments[i].start < segments[i - 1].end) {
+  let furthestEnd = -1;
+  for (const segment of segments) {
+    if (segment.start < furthestEnd) {
       throw new RangeError("NPC schedule contains overlapping activities");
     }
+    furthestEnd = Math.max(furthestEnd, segment.end);
   }
   return true;
 }
