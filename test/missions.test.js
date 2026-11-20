@@ -82,7 +82,9 @@ test("mission objectives can require a specific authored target and item", () =>
   assert.equal(state.objectives[0].targetId, "shop-market");
   const advanced = recordMissionProgress(state, "buy-item", 1, "2026-11-20T08:01:00.000Z", "buy-bread-event", { targetId: "shop-market", shopId: "shop-market", itemId: "bread" });
   assert.equal(advanced.status, "completed");
-  assert.equal(recordMissionProgress(state, "buy-item", 1, "2026-11-20T08:01:00.000Z", "wrong-shop-event", { targetId: "other-shop", shopId: "other-shop", itemId: "bread" }).status, "active");
+  const ignored = recordMissionProgress(state, "buy-item", 1, "2026-11-20T08:01:00.000Z", "wrong-shop-event", { targetId: "other-shop", shopId: "other-shop", itemId: "bread" });
+  assert.equal(ignored.status, "active");
+  assert.equal(ignored.eventHistory.at(-1).type, "mission-progress-ignored");
 });
 
 test("mission start trims run identifiers and rejects reserved completion event collisions", () => {
