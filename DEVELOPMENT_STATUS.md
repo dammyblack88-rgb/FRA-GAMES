@@ -14,6 +14,8 @@
   - Age progression and event history.
   - Akara stand business model with stock, sales, cash and ledger records.
   - Deterministic NPC daily schedules, location/activity resolution, overnight shifts and overlap validation.
+  - Shared-clock NPC population simulation with stable identities and district-location validation.
+  - First fictional Lagos district seed: eight locations, eight road links, a 50 m blockout grid and six scheduled residents.
   - Deterministic world clock with pause/time-scale and calendar rollover.
   - Validated district locations and one-way/two-way road connections.
   - Lowest-cost road pathfinding with disconnected-route handling.
@@ -44,7 +46,7 @@ These are headless domain-logic tests. They do not prove that a 3D game, Unreal 
 - Versioned save snapshot logic and tests are committed in `src/core/save.js` and `test/save.test.js`; this is an in-memory schema/validation layer, not cloud or disk persistence.
 - Structural Node tests now check that the native world subsystem API and implementation are present. This is source-structure coverage only.
 - First playable Lagos-inspired neighbourhood is scoped in `docs/FIRST_PLAYABLE_SLICE.md`; no 3D district or explorable world has been built yet.
-- No visual NPCs, traffic or crowds. NPC schedule rules exist only as engine-independent code.
+- No visual NPCs, traffic or crowds. NPC population/schedule rules and first-district seed content exist only as engine-independent code; no 3D actors or Unreal district level have been created.
 - No connected in-game business interaction or customer AI.
 - No production save backend or UI.
 - No multiplayer or creator tools.
@@ -66,7 +68,7 @@ These two sources are approved for isolated submodule tracking only, not product
 
 1. Compile and open the committed UE 5.8 C++ scaffold on a compatible workstation.
 2. Create a small Open World test level and verify player movement, camera and jump.
-3. Compile and validate the new FRA GAMES-owned Unreal world subsystem, then verify parity with the engine-independent clock and district graph.
+3. Compile and validate the FRA GAMES-owned Unreal world subsystem, then connect the seeded district and NPC population snapshots with parity tests.
 4. Build the home-to-market greybox route and first business interaction.
 5. Compile City Form and KinetiForge in isolation; validate the Windows toolchain, runtime behavior, licence notices and performance.
 
