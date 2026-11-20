@@ -66,11 +66,50 @@ function validateGameSave(save) {
     throw new TypeError("world.clock is invalid or unsupported");
   }
   requireText(clock.worldDate, "world.clock.worldDate");
+  if (save.interactionState !== null && save.interactionState !== undefined) {
+    const state = save.interactionState;
+    if (!state || state.schemaVersion !== 1) throw new TypeError("interactionState is invalid or unsupported");
+    requireText(state.districtId, "interactionState.districtId");
+    if (state.districtId !== save.world.districtId) throw new RangeError("interactionState district must match saved world district");
+    const targets = requireRecords(state.targets, "interactionState.targets");
+    const targetIds = new Set(targets.map(target => target.id));
+    if (!Array.isArray(state.consumedTargetIds)) throw new TypeError("interactionState.consumedTargetIds must be an array");
+    const consumed = new Set();
+    for (const targetId of state.consumedTargetIds) {
+      const id = requireText(targetId, "interactionState.consumedTargetIds entry");
+      if (!targetIds.has(id) || consumed.has(id)) throw new RangeError("interactionState has an unknown or duplicate consumed target");
+      consumed.add(id);
+    }
+    requireRecords(state.events, "interactionState.events");
+  }
+  if (!Array.isArray(save.missionStates ?? [])) throw new TypeError("missionStates must be an array");
+  const missionIds = new Set();
+  for (const [index, mission] of (save.missionStates ?? []).entries()) {
+    if (!mission || mission.schemaVersion !== 1) throw new TypeError(`missionStates[${index}] is invalid or unsupported`);
+    const missionId = requireText(mission.missionId, `missionStates[${index}].missionId`);
+    if (missionIds.has(missionId)) throw new RangeError("missionStates contains duplicate mission id");
+    missionIds.add(missionId);
+    if (!["active", "completed"].includes(mission.status)) throw new TypeError("mission status is invalid");
+    requireText(mission.startedAt, "mission.startedAt");
+    if (mission.status === "completed") requireText(mission.completedAt, "mission.completedAt");
+    if (typeof mission.rewardClaimed !== "boolean") throw new TypeError("mission.rewardClaimed must be a boolean");
+    if (!Array.isArray(mission.objectives) || mission.objectives.length === 0) throw new TypeError("mission objectives must be a non-empty array");
+    requireRecords(mission.objectives, "mission.objectives");
+    for (const objective of mission.objectives) {
+      if (!Number.isSafeInteger(objective.target) || objective.target < 1
+          || !Number.isSafeInteger(objective.progress) || objective.progress < 0
+          || objective.progress > objective.target || typeof objective.completed !== "boolean"
+          || objective.completed !== (objective.progress >= objective.target)) {
+        throw new TypeError("mission objective progress is invalid");
+      }
+    }
+    requireRecords(mission.eventHistory, "mission.eventHistory");
+  }
   return save;
 }
 
 /** Create a detached, versioned snapshot; callers retain ownership of their live state. */
-export function createGameSave({ gameId, savedAt, player, world, businesses = [], npcStates = [], economy = null, progression = {} }) {
+export function createGameSave({ gameId, savedAt, player, world, businesses = [], npcStates = [], economy = null, interactionState = null, missionStates = [], progression = {} }) {
   const snapshot = {
     schemaVersion: 1,
     gameId: requireText(gameId, "gameId"),
@@ -80,6 +119,8 @@ export function createGameSave({ gameId, savedAt, player, world, businesses = []
     businesses: structuredClone(businesses),
     npcStates: structuredClone(npcStates),
     economy: economy === null ? null : structuredClone(economy),
+    interactionState: interactionState === null ? null : structuredClone(interactionState),
+    missionStates: structuredClone(missionStates),
     progression: structuredClone(progression)
   };
   validateGameSave(snapshot);
