@@ -112,3 +112,5 @@ Every feature must include:
 - Native Unreal local save foundation added: versioned USaveGame data model plus a GameInstanceSubsystem for validated SaveToSlot/LoadFromSlot, covering life identity, district/clock, economy, businesses, NPC snapshots, mission runs/events and consumed interactions. See [docs/UNREAL_SAVE_BRIDGE.md](docs/UNREAL_SAVE_BRIDGE.md). It is not yet wired to live gameplay and is not compiled or runtime-tested.
 
 - Reusable native Blueprint interaction actor added: `AFRAWorldInteractableActor` provides a mesh slot, prompt, enabled/range validation and a Blueprint event for actor-specific responses. Still requires Blueprint children for the district's NPCs, pickups, shops, transport and services.
+
+- Procedural first-district blockout actor source added: `AFRAFirstDistrictBlockout` creates a 300 m × 300 m ground plane, the eight seed road corridors and blockout masses for the first seven district locations using Unreal's built-in cube mesh. See [docs/FIRST_DISTRICT_BLOCKOUT.md](docs/FIRST_DISTRICT_BLOCKOUT.md). It is not yet placed in a level or compiled/tested in Unreal.
