@@ -35,7 +35,9 @@ test("game save creates a versioned detached snapshot of life, world and progres
   assert.equal(save.world.districtId, "agege-first-district");
   assert.equal(save.businesses[0].cashNaira, 2500);
   assert.equal(save.economy.walletNaira, 1200);
-  assert.equal(save.economy.items[0].itemId, "bread");\n  assert.equal(save.interactionState.targets[0].id, "market-npc");\n  assert.equal(save.missionStates[0].missionId, "meet-neighbour");
+  assert.equal(save.economy.items[0].itemId, "bread");
+  assert.equal(save.interactionState.targets[0].id, "market-npc");
+  assert.equal(save.missionStates[0].missionId, "meet-neighbour");
   save.player.lives[0].name = "Changed copy";
   assert.equal(input.player.lives[0].name, "Ada");
 });
