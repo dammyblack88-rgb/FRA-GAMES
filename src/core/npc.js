@@ -81,3 +81,46 @@ export function resolveNpcActivity(npc, minuteOfDay) {
 export const npcTimeRules = Object.freeze({
   minutesPerDay: MINUTES_PER_DAY
 });
+
+
+/**
+ * Resolve a lightweight population snapshot against one shared world minute.
+ * This updates no actor objects and is suitable for NPCs outside the loaded camera area.
+ */
+export function simulateNpcPopulation(npcs, district, minuteOfDay) {
+  assertMinute(minuteOfDay, "minuteOfDay");
+  if (!Array.isArray(npcs)) throw new TypeError("npcs must be an array");
+  if (!district || district.schemaVersion !== 1 || !Array.isArray(district.locations)) {
+    throw new TypeError("A supported district is required");
+  }
+  const locationIds = new Set(district.locations.map(location => location.id));
+  const npcIds = new Set();
+
+  return npcs.map((npc, index) => {
+    if (!npc || typeof npc !== "object" || Array.isArray(npc)) {
+      throw new TypeError(`npcs[${index}] must be an object`);
+    }
+    if (typeof npc.id !== "string" || npc.id.trim() === "") {
+      throw new TypeError(`npcs[${index}].id is required`);
+    }
+    if (npcIds.has(npc.id)) throw new RangeError(`Duplicate NPC id: ${npc.id}`);
+    npcIds.add(npc.id);
+    validateNpcSchedule(npc.schedule);
+
+    const possibleLocations = [
+      npc.defaultLocationId,
+      ...npc.schedule.map(activity => activity.locationId)
+    ].filter(Boolean);
+    for (const locationId of possibleLocations) {
+      if (!locationIds.has(locationId)) {
+        throw new RangeError(`NPC ${npc.id} references unknown district location: ${locationId}`);
+      }
+    }
+    const resolved = resolveNpcActivity(npc, minuteOfDay);
+    return {
+      ...resolved,
+      role: npc.role ?? "resident",
+      persistent: npc.persistent !== false
+    };
+  });
+}
