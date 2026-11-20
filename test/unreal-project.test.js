@@ -41,3 +41,18 @@ test("third-party modules are not forced into the initial runtime build", () => 
   assert.match(build, /"Engine"/);
   assert.doesNotMatch(build, /CityForm|KinetiForge|AsyncTickPhysics/);
 });
+
+
+test("native world simulation subsystem exposes validated clock, district and route contracts", () => {
+  assert.ok(existsSync(new URL("../Source/FRAGames/Public/FRAWorldTypes.h", import.meta.url)));
+  assert.ok(existsSync(new URL("../Source/FRAGames/Public/FRAWorldSimulationSubsystem.h", import.meta.url)));
+  assert.ok(existsSync(new URL("../Source/FRAGames/Private/FRAWorldSimulationSubsystem.cpp", import.meta.url)));
+  const header = read("Source/FRAGames/Public/FRAWorldSimulationSubsystem.h");
+  const implementation = read("Source/FRAGames/Private/FRAWorldSimulationSubsystem.cpp");
+  for (const method of ["ConfigureClock", "AdvanceSimulationSeconds", "SetDistrict", "FindRoute"]) {
+    assert.ok(header.includes(method), `Missing subsystem API: ${method}`);
+  }
+  assert.match(implementation, /Road\.bOneWay/);
+  assert.match(implementation, /Algo::Reverse/);
+  assert.ok(existsSync(new URL("../docs/UNREAL_WORLD_SIMULATION_BRIDGE.md", import.meta.url)));
+});
