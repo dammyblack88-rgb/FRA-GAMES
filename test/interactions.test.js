@@ -1,8 +1,8 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { createDistrict } from "../src/core/world.js";
-import { createMission, startMission } from "./missions.js";
-import { createPlayerEconomy, createShop } from "./inventory.js";
+import { createMission, startMission } from "../src/core/missions.js";
+import { createPlayerEconomy, createShop } from "../src/core/inventory.js";
 import {
   createInteractionRegistry, performWorldInteraction, applyWorldEventToMission
 } from "./interactions.js";
