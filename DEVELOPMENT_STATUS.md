@@ -31,8 +31,10 @@ These are headless domain-logic tests. They do not prove that a 3D game, Unreal 
 
 ## Not yet implemented
 
-- Unreal Engine target selected: **UE 5.8**. The engine/editor is not installed and no FRA GAMES Unreal project has been generated yet.
-- No playable 3D character or camera.
+- Unreal Engine target selected: **UE 5.8**.
+- Native Unreal C++ project scaffold committed: `FRAGames.uproject`, Game/Editor targets, runtime module, third-person player character, camera, basic movement/jump input and prototype GameMode.
+- Unreal Engine/editor is not installed in the available environment; the new project has not been compiled or opened.
+- Native player character and camera source classes exist, but there is no compiled or visually verified 3D character yet.
 - No Lagos district or explorable world.
 - No visual NPCs, traffic or crowds. NPC schedule rules exist only as engine-independent code.
 - No connected in-game business interaction or customer AI.
@@ -54,9 +56,9 @@ These two sources are approved for isolated submodule tracking only, not product
 
 ## Immediate engineering sequence
 
-1. Continue expanding and testing the engine-independent life/economy rules.
-2. Define first-district world entities, roads, plots, shops and NPC schedule contracts.
-3. When a capable workstation is available, install UE 5.8 and generate the FRA GAMES Unreal project.
+1. Compile and open the committed UE 5.8 C++ scaffold on a compatible workstation.
+2. Create a small Open World test level and verify player movement, camera and jump.
+3. Define the first Lagos-district world entities, roads, plots, shops and NPC schedule contracts.
 4. Compile City Form and KinetiForge in isolation; validate the Windows toolchain, runtime behavior, licence notices and performance.
 5. Integrate only the selected city-simulation and vehicle systems behind FRA GAMES-owned interfaces.
 
