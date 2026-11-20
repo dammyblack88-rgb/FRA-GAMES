@@ -1,3 +1,5 @@
+import { getWorldIdentitySummary } from "./identity.js";
+import { validatePlayerCharacter } from "./character-creator.js";
 function requireText(value, field) {
   if (typeof value !== "string" || value.trim() === "") throw new TypeError(`${field} must be a non-empty string`);
   return value.trim();
@@ -21,6 +23,31 @@ function validateGameSave(save) {
   const lives = requireRecords(save.player.lives, "player.lives");
   const activeLifeId = requireText(save.player.activeLifeId, "player.activeLifeId");
   if (!lives.some(life => life.id === activeLifeId)) throw new RangeError("activeLifeId must reference a saved life");
+  const hasIdentity = save.player.identity !== undefined && save.player.identity !== null;
+  const hasCharacter = save.player.character !== undefined && save.player.character !== null;
+  if (hasIdentity !== hasCharacter) throw new TypeError("player.identity and player.character must be saved together");
+  if (hasIdentity) {
+    const identitySummary = getWorldIdentitySummary(save.player.identity);
+    const character = save.player.character;
+    validatePlayerCharacter(character);
+    if (identitySummary.playerId !== character.playerId || identitySummary.handle !== character.handle) {
+      throw new RangeError("Saved world identity must match the saved character");
+    }
+    const activeLife = lives.find(life => life.id === activeLifeId);
+    if (activeLife.playerId !== character.playerId || activeLife.name !== character.characterName) {
+      throw new RangeError("Active life must belong to the saved character");
+    }
+    if (!save.player.startingPoint || typeof save.player.startingPoint !== "object"
+      || save.player.startingPoint.regionId !== character.startingPoint.regionId
+      || save.player.startingPoint.districtId !== character.startingPoint.districtId) {
+      throw new RangeError("Saved starting point must match the saved character");
+    }
+    if (save.world?.districtId !== character.startingPoint.districtId) {
+      throw new RangeError("Saved world district must match the character starting district");
+    }
+  } else if (save.player.startingPoint !== undefined) {
+    throw new TypeError("player.startingPoint requires a saved identity and character");
+  }
   const lifeIds = new Set(lives.map(life => life.id));
   const businesses = requireRecords(save.businesses ?? [], "businesses");
   for (const business of businesses) if (!lifeIds.has(requireText(business.ownerLifeId, "business.ownerLifeId"))) throw new RangeError(`Business ${business.id} references an unknown owner life`);
