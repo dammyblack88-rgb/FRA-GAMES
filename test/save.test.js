@@ -10,7 +10,7 @@ const fixture = () => ({
   npcStates: [{ id: "npc-001", locationId: "market", scheduleState: "working" }],
   economy: { schemaVersion: 1, playerId: "player-001", walletNaira: 1200, items: [{ itemId: "bread", quantity: 2 }], ledger: [{ id: "player-001:opening", type: "opening-balance", amountNaira: 1200, occurredAt: "2026-11-20T18:00:00.000Z" }] },
   interactionState: { schemaVersion: 1, districtId: "agege-first-district", targets: [{ id: "market-npc" }], consumedTargetIds: [], events: [] },
-  missionStates: [{ schemaVersion: 1, missionId: "meet-neighbour", status: "active", startedAt: "2026-11-20T18:00:00.000Z", completedAt: null, rewardClaimed: false, objectives: [{ id: "talk", type: "talk-to-npc", target: 1, progress: 0, completed: false }], eventHistory: [{ id: "meet-neighbour:started" }] }],
+  missionStates: [{ schemaVersion: 1, missionId: "meet-neighbour", runId: "meet-neighbour-run-001", status: "active", startedAt: "2026-11-20T18:00:00.000Z", completedAt: null, rewardClaimed: false, objectives: [{ id: "talk", type: "talk-to-npc", target: 1, progress: 0, completed: false }], eventHistory: [{ id: "meet-neighbour:started" }] }],
   progression: { experience: 0, completedMissionIds: [], unlocks: [] }
 });
 test("game save creates a versioned detached snapshot of life, world and progression", () => {
@@ -60,6 +60,16 @@ test("save validation rejects interaction and mission state corruption", () => {
   assert.throws(() => createGameSave({ ...save, missionStates: [{ ...save.missionStates[0], objectives: [{ id: "talk", type: "talk-to-npc", target: 1, progress: 2, completed: true }] }] }), /mission objective progress is invalid/);
   assert.throws(() => createGameSave({ ...save, missionStates: [save.missionStates[0], save.missionStates[0]] }), /duplicate mission id/);
 });
+test("save supports separate playthroughs of the same mission but rejects duplicate run IDs", () => {
+  const save = fixture();
+  const first = save.missionStates[0];
+  const second = { ...first, runId: "meet-neighbour-run-002", startedAt: "2026-11-21T08:00:00.000Z",
+    eventHistory: [{ id: "meet-neighbour-run-002:started" }] };
+  const snapshot = createGameSave({ ...save, missionStates: [first, second] });
+  assert.equal(snapshot.missionStates.length, 2);
+  assert.throws(() => createGameSave({ ...save, missionStates: [first, { ...second, runId: first.runId }] }), /duplicate mission run id/);
+});
+
 test("save validation rejects inconsistent mission completion and invalid progression", () => {
   const save = fixture();
   assert.throws(() => createGameSave({ ...save, missionStates: [{ ...save.missionStates[0], status: "completed", completedAt: "2026-11-20T19:00:00.000Z" }] }), /every objective completed/);
