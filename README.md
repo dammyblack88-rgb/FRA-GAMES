@@ -1,26 +1,23 @@
 # FRA GAMES
 
-**A SimeonJr Studios project**
+**A SimeonJr Studios project**  
+**Game universe: NEXT WORLD**
 
-FRA GAMES is the working platform name for an ambitious, connected game universe. The final player-facing game title has not yet been selected.
+> **One World. Unlimited Lives. Infinite Possibilities.**
 
-> Imagine it. Build it. Play it. Share it.
+NEXT WORLD is a connected, expandable game universe. It is not a collection of unrelated mini-games. One shared world, character identity, progression model, economy and save system support multiple careers and experiences over time.
 
-## Vision
-
-Create one cohesive, premium open-world experience with the freedom, depth and presentation expected of a major modern game. Players can live original stories, explore a richly simulated world, build businesses and communities, take on missions, play sports and other experiences, and eventually create and share their own approved game modes.
-
-This is **not** intended to be a low-quality portal of unrelated mini-games. The experiences should share a consistent identity, player profile, progression framework and connected world.
+Players can live original stories, explore a richly simulated world, build businesses and communities, pursue sports and entertainment careers, take on missions and eventually create and share approved experiences. A football career, business empire or later original action/superhero chapter should remain part of the same connected identity—not a disconnected restart.
 
 ## Development principles
 
-1. **One coherent universe:** consistent presentation, controls, identity and progression.
+1. **One coherent universe:** consistent presentation, controls, identity, progression and persistent history.
 2. **Original intellectual property:** no unauthorised GTA maps, characters, code, music, branding or other protected assets.
 3. **Playable proof over promises:** every milestone must be implemented and tested before being marked complete.
 4. **Cloud-first, free-first:** use free development resources where practical; no paid cloud, AI API, asset, subscription or upgrade without explicit approval.
 5. **Hardware-aware:** current development can focus on architecture, game rules, tools and lightweight prototypes. High-end 3D authoring and rendering will move to a capable workstation when available.
 6. **Reuse responsibly:** inspect source code, licences, dependencies, quality and compatibility before adopting any external project.
-7. **Incremental world-building:** begin with one compact, detailed Lagos-inspired district rather than claiming to build all of Lagos at once.
+7. **Incremental world-building:** begin with one compact, detailed Lagos-inspired district, then expand region by region.
 
 ## First playable milestone
 
@@ -29,15 +26,17 @@ A small but real Lagos-inspired district with:
 - A persistent save and load flow.
 - A distinct life beginning and character profile.
 - A small explorable environment.
-- A few functional NPC routines.
+- Functional NPC routines and interactions.
 - One interactive business loop, beginning with an akara stand.
+- Mission completion with a one-time wallet and experience reward.
 - Clear performance and test criteria.
 
 ## Current development state
 
-**Foundation phase with a native Unreal project scaffold.** Engine-independent life, business, NPC population, mission, save-schema and district/world-clock rules are implemented with a dependency-free test suite. The latest additions have been committed; their new GitHub Actions run has not yet been independently verified. A UE 5.8 C++ project skeleton now includes a native third-person character, camera, basic keyboard/mouse movement, jump and prototype GameMode. It has not yet been compiled or opened in Unreal; no playable 3D city, NPC visuals or district exists yet.
+**Foundation phase with a native Unreal project scaffold.** Engine-independent life, business, NPC, mission, save-schema, economy, interaction and district/world-clock rules are implemented with a dependency-free test suite. A UE 5.8 C++ project skeleton includes a native third-person character, camera, basic keyboard/mouse movement, jump and prototype GameMode. It has not yet been compiled or opened in Unreal; no playable 3D city, NPC visuals or district exists yet.
 
 - [Development status](DEVELOPMENT_STATUS.md)
+- [NEXT WORLD connected-universe architecture](docs/NEXT_WORLD_UNIVERSE_ARCHITECTURE.md)
 - [Unreal project foundation](docs/UNREAL_PROJECT_FOUNDATION.md)
 - [First playable Lagos neighbourhood scope](docs/FIRST_PLAYABLE_SLICE.md)
 - [Architecture](ARCHITECTURE.md)
@@ -47,7 +46,7 @@ A small but real Lagos-inspired district with:
 
 ## Engine and upstream projects
 
-The first Unreal integration target is **Unreal Engine 5.8**. Two reviewed upstream repositories are pinned as Git submodules: City Form (city simulation/roads/zoning reference) and KinetiForge Vehicles (candidate vehicle-physics plugin). They are isolated and are not yet compiled or enabled in a playable FRA GAMES build.
+The first Unreal integration target is **Unreal Engine 5.8**. Two reviewed upstream repositories are pinned as Git submodules: City Form (city simulation/roads/zoning reference) and KinetiForge Vehicles (candidate vehicle-physics plugin). They are isolated and are not yet compiled or enabled in a playable NEXT WORLD build.
 
 Clone the repository and its pinned upstream sources with:
 
@@ -72,6 +71,5 @@ The tests run without third-party npm dependencies. GitHub Actions also runs the
 - **Founder / Concept Lead:** Afolabi Oluwadamilare Simeon
 - **Studio:** SimeonJr Studios
 
-## Working title
-
-FRA GAMES is the project/platform label only. The official game title remains undecided.
+Repository: dammyblack88-rgb/FRA-GAMES  
+Established game-universe identity: NEXT WORLD
