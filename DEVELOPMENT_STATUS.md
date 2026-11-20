@@ -112,3 +112,22 @@ Research candidates and the no-spend decision are recorded in `docs/CLOUD_FIRST_
 ## Definition of done
 
 Every milestone must report repository paths, actual implementation, run instructions, tests performed, runtime verification, known limitations and licence/source notes. A rules module is not a 3D feature; a C++ source file is not a compiled Unreal build; a design document is not a playable game.
+
+
+## Newly recorded product requirements — social world and creator economy (2026-11-20)
+
+The founder has expanded the long-term vision. The following are now official product requirements and remain **not implemented**:
+
+- **Living platform:** SimeonJr Studios updates the core world; players and creators expand it through approved content, community feedback, events and experiences. Design for long-term sustainability, not a literal guarantee of perpetual operation.
+- **Social communication:** friends, direct/group text chat, optional voice, community spaces, invitations, privacy settings, blocking, reporting and moderation.
+- **Livestreaming:** player broadcasts for gameplay, creator showcases, tournaments and events, with audience controls, rights handling, moderation and age safeguards.
+- **Creator economy:** real creator opportunities through approved original experiences, media, events and sponsored work. Potential rewards include actual cash, airtime, data bundles, prizes and production support.
+- **SimeonJr Creator Fund:** proposed studio-funded investment in selected creators and community projects, only when an actual budget or sponsor funding exists. No guaranteed earnings or unfunded reward promises.
+- **Separate economies:** virtual game cash, fictional investments and fictional heist rewards never become real money. Real-world creator rewards use a separate verified, auditable payment ledger. Fictional crime gameplay is not a real-world earning method.
+- **Virtual smartphone:** fictional in-world phone apps, NPC contacts, calls, messages, maps and mission alerts, distinct from real-device integrations.
+- **Real-device companion:** research supported, permission-based notifications and actions for WhatsApp and other services, plus possible call/music controls. Use official provider APIs and OS capabilities only; no scraping or security bypass. Quick replies and voice messages are conditional on platform support and must be tested before being promised.
+- **Trust and safety:** privacy, age-appropriate defaults, moderation, reporting, blocking, copyright/licence review, anti-fraud, payment/tax/legal compliance, streaming safety and data minimisation are prerequisites.
+
+Full requirements and staged rollout: `docs/SOCIAL_WORLD_CREATOR_ECONOMY.md` and sections 14–17 of `docs/GLOBAL_GAME_VISION.md`.
+
+These are documented product requirements only. Social networking, livestreaming, WhatsApp integration, real payouts, creator marketplace and creator fund are not implemented or deployed. Continue free-first, preserve existing work and do not incur paid costs without explicit approval.

@@ -2,9 +2,9 @@ name: Core gameplay tests
 
 on:
   push:
-    branches: [main]
+    branches: [main, feature/shared-world-identity]
   pull_request:
-    branches: [main]
+    branches: [main, feature/shared-world-identity]
 
 jobs:
   test:
@@ -18,5 +18,7 @@ jobs:
           node-version: 22
       - name: Check browser MVP JavaScript syntax
         run: node --check mvp/game.js
+      - name: Check NPC goal engine syntax
+        run: node --check src/core/npc-goals.js
       - name: Run dependency-free gameplay tests
         run: npm test
