@@ -71,7 +71,7 @@ bool UFRAPlayerSaveSubsystem::ValidateSaveData(const UFRAPlayerSaveGame* SaveDat
             ObjectiveIds.Add(Objective.ObjectiveId);
             bAllObjectivesComplete &= Objective.bCompleted;
         }
-        if ((Mission.Status == TEXT("completed")) != bAllObjectivesComplete) return false;
+        if ((Mission.Status == FName(TEXT("completed"))) != bAllObjectivesComplete) return false;
     }
 
     TSet<FString> TransactionIds;
