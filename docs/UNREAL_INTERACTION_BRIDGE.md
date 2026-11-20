@@ -5,13 +5,14 @@
 ## Included source
 
 - `FRAInteractable.h`: BlueprintNativeEvent interface for an actor's prompt, interaction eligibility and interaction action.
+- `FRAWorldInteractableActor.h/.cpp`: reusable Blueprintable actor base with a visual mesh slot, prompt, enabled/range checks and a Blueprint interaction response event.
 - `FRAPlayerInteractionComponent.h/.cpp`: player-owned camera-forward visibility trace, interface validation, current target, prompt lookup and interaction dispatch.
 - `FRAPlayerCharacter.h/.cpp`: owns the interaction component and calls it when the player presses E.
 - `Config/DefaultInput.ini`: maps E to the Interact action.
 
 ## Runtime contract
 
-1. A world actor implements the FRA Interactable interface in C++ or Blueprint.
+1. A world actor implements the FRA Interactable interface in C++ or Blueprint, or derives from `AFRAWorldInteractableActor`.
 2. The player component traces forward from the active controller view up to its configured distance (default 350 Unreal units).
 3. Only actors implementing the interface and returning true from CanInteract become the current target.
 4. The component refreshes the target ten times per second and broadcasts OnTargetChanged when it changes.
