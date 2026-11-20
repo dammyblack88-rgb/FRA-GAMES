@@ -22,10 +22,10 @@
 
 GitHub Actions workflow: Core gameplay tests.
 
-- Latest run: https://github.com/dammyblack88-rgb/FRA-GAMES/actions/runs/44803025296
+- Latest run: https://github.com/dammyblack88-rgb/FRA-GAMES/actions/runs/44803292696
 - Result observed: **success**.
 - The earlier workflow run for the workflow commit also completed successfully.
-- Tests cover life creation, invalid opening rejection, save continuation, age progression, business opening, sales, stock validation, restocking, NPC daily schedules, overnight shifts and invalid/overlapping schedules.
+- Tests cover life creation, invalid opening rejection, save continuation, age progression, business opening, sales, stock validation, restocking, NPC daily schedules, overnight shifts and invalid/overlapping schedules. Latest run after the NPC overlap-validation hardening: **success**.
 
 These are headless domain-logic tests. They do not prove that a 3D game, Unreal project, graphics pipeline or playable city works.
 
