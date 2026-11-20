@@ -2,17 +2,17 @@
 
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
+#include "Components/InputComponent.h"
+#include "FRAPlayerInteractionComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/Controller.h"
 #include "GameFramework/SpringArmComponent.h"
-#include "Components/InputComponent.h"
 
 AFRAPlayerCharacter::AFRAPlayerCharacter()
 {
     PrimaryActorTick.bCanEverTick = false;
 
     GetCapsuleComponent()->InitCapsuleSize(42.0f, 96.0f);
-
     bUseControllerRotationPitch = false;
     bUseControllerRotationYaw = false;
     bUseControllerRotationRoll = false;
@@ -31,19 +31,22 @@ AFRAPlayerCharacter::AFRAPlayerCharacter()
     FollowCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("FollowCamera"));
     FollowCamera->SetupAttachment(CameraBoom, USpringArmComponent::SocketName);
     FollowCamera->bUsePawnControlRotation = false;
+
+    InteractionComponent = CreateDefaultSubobject<UFRAPlayerInteractionComponent>(TEXT("PlayerInteraction"));
 }
 
 void AFRAPlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
     Super::SetupPlayerInputComponent(PlayerInputComponent);
-
     check(PlayerInputComponent);
+
     PlayerInputComponent->BindAxis(TEXT("MoveForward"), this, &AFRAPlayerCharacter::MoveForward);
     PlayerInputComponent->BindAxis(TEXT("MoveRight"), this, &AFRAPlayerCharacter::MoveRight);
     PlayerInputComponent->BindAxis(TEXT("Turn"), this, &AFRAPlayerCharacter::Turn);
     PlayerInputComponent->BindAxis(TEXT("LookUp"), this, &AFRAPlayerCharacter::LookUp);
     PlayerInputComponent->BindAction(TEXT("Jump"), IE_Pressed, this, &ACharacter::Jump);
     PlayerInputComponent->BindAction(TEXT("Jump"), IE_Released, this, &ACharacter::StopJumping);
+    PlayerInputComponent->BindAction(TEXT("Interact"), IE_Pressed, this, &AFRAPlayerCharacter::Interact);
 }
 
 void AFRAPlayerCharacter::MoveForward(float Value)
@@ -54,7 +57,6 @@ void AFRAPlayerCharacter::MoveForward(float Value)
         AddMovementInput(FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X), Value);
     }
 }
-
 void AFRAPlayerCharacter::MoveRight(float Value)
 {
     if (Controller && !FMath::IsNearlyZero(Value))
@@ -63,13 +65,9 @@ void AFRAPlayerCharacter::MoveRight(float Value)
         AddMovementInput(FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y), Value);
     }
 }
-
-void AFRAPlayerCharacter::Turn(float Value)
+void AFRAPlayerCharacter::Turn(float Value) { AddControllerYawInput(Value); }
+void AFRAPlayerCharacter::LookUp(float Value) { AddControllerPitchInput(Value); }
+void AFRAPlayerCharacter::Interact()
 {
-    AddControllerYawInput(Value);
-}
-
-void AFRAPlayerCharacter::LookUp(float Value)
-{
-    AddControllerPitchInput(Value);
+    if (InteractionComponent) InteractionComponent->TryInteract();
 }
