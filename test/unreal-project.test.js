@@ -72,5 +72,6 @@ test("native player interaction component, interface and E-key binding are conne
   assert.match(input, /ActionName="Interact",Key=E/);
   const interaction = read("Source/FRAGames/Private/FRAPlayerInteractionComponent.cpp");
   assert.match(interaction, /LineTraceSingleByChannel/);
+  assert.match(interaction, /TickInterval = 0\.1f/);
   assert.match(interaction, /Execute_Interact/);
 });
