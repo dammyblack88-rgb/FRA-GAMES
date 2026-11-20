@@ -1,0 +1,30 @@
+name: NPC goal engine tests
+
+on:
+  push:
+    branches:
+      - feature/npc-goal-execution
+      - feature/shared-world-identity
+  pull_request:
+    branches:
+      - main
+      - feature/shared-world-identity
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  npc-goals:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Check gameplay module syntax
+        run: node --check src/core/npc-goals.js
+      - name: Run gameplay core tests
+        run: npm test
