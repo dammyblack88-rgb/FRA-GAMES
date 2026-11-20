@@ -1,0 +1,13 @@
+{
+  "name": "fra-games",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Original connected-world game foundation by SimeonJr Studios",
+  "scripts": {
+    "test": "node --test"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
