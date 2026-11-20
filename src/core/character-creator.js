@@ -92,7 +92,12 @@ export function updatePlayerCharacter(character, changes) {
   for (const key of Object.keys(changes)) {
     if (!allowed.includes(key)) throw new RangeError(`Character field cannot be changed here: ${key}`);
   }
-  return createPlayerCharacter({ ...structuredClone(character), ...structuredClone(changes) });
+  return createPlayerCharacter({
+    ...structuredClone(character),
+    startingRegionId: character.startingPoint.regionId,
+    startingDistrictId: character.startingPoint.districtId,
+    ...structuredClone(changes)
+  });
 }
 
 export function validatePlayerCharacter(character) {
