@@ -148,3 +148,19 @@ test("world event IDs cannot be replayed against the same interaction registry",
     occurredAt: at, eventId: "event-once"
   }), /Duplicate world event id/);
 });
+
+test("targeted mission objective ignores unrelated NPCs and counts only the named resident", () => {
+  const definition = createMission({
+    id: "meet-mama-kemi", title: "Meet Mama Kemi", description: "Find one specific resident",
+    objectives: [{ id: "greet-mama", type: "talk-to-npc", targetId: "mama-kemi", description: "Greet Mama Kemi", target: 1 }],
+    reward: { cashNaira: 0, experience: 5 }
+  });
+  const mission = startMission(definition, at, "meet-mama-run");
+  const otherNpcEvent = { id: "talk-to-other", type: "npc-talked-to", targetId: "other-npc", payload: { npcId: "other-npc" }, occurredAt: at };
+  const unchanged = applyWorldEventToMission(mission, otherNpcEvent);
+  assert.equal(unchanged.objectives[0].progress, 0);
+  const mamaEvent = { id: "talk-to-mama", type: "npc-talked-to", targetId: "mama-kemi", payload: { npcId: "mama-kemi" }, occurredAt: at };
+  const completed = applyWorldEventToMission(unchanged, mamaEvent);
+  assert.equal(completed.status, "completed");
+  assert.equal(completed.objectives[0].progress, 1);
+});
