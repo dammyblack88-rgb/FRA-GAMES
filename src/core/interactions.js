@@ -57,7 +57,7 @@ export function createInteractionRegistry({ district, targets }) {
  */
 export function performWorldInteraction({
   registry, player, targetId, action, occurredAt, eventId,
-  economy = null, shop = null, itemId = null, quantity = 1, destinationId = null
+  economy = null, shop = null, itemId = null, quantity = 1, destinationId = null, npcPopulation = null
 }) {
   record(registry, "registry");
   if (registry.schemaVersion !== 1 || !Array.isArray(registry.targets)) throw new TypeError("A supported interaction registry is required");
@@ -72,6 +72,11 @@ export function performWorldInteraction({
   if (!target) throw new RangeError("Interaction target does not exist");
   if (registry.consumedTargetIds.includes(id)) throw new RangeError("Interaction target has already been consumed");
   if (target.locationId !== locationId) throw new RangeError("Player must be at the target location");
+  if (target.type === "npc") {
+    if (!Array.isArray(npcPopulation)) throw new TypeError("Current NPC population snapshot is required to talk to a resident");
+    const resident = npcPopulation.find(npc => npc.npcId === target.id);
+    if (!resident || resident.locationId !== locationId) throw new RangeError("Resident is not currently present at this location");
+  }
   if (registry.events?.some(event => event.id === eventKey)) throw new RangeError("Duplicate world event id");
 
   let nextPlayer = structuredClone(player);
