@@ -84,7 +84,7 @@ test("native Unreal save object and slot subsystem preserve versioned player-wor
   ]) assert.ok(existsSync(new URL("../" + path, import.meta.url)), `Missing save source: ${path}`);
   const saveType = read("Source/FRAGames/Public/FRAPlayerSaveGame.h");
   const subsystem = read("Source/FRAGames/Private/FRAPlayerSaveSubsystem.cpp");
-  for (const field of ["Lives", "ActiveLifeId", "WalletNaira", "Experience", "Inventory", "Businesses", "NpcStates", "MissionRuns", "ConsumedInteractionTargetIds"]) {
+  for (const field of ["Lives", "ActiveLifeId", "WalletNaira", "Experience", "Inventory", "EconomyTransactions", "Businesses", "NpcStates", "MissionRuns", "ConsumedInteractionTargetIds"]) {
     assert.ok(saveType.includes(field), `Missing saved field: ${field}`);
   }
   assert.match(subsystem, /SaveGameToSlot/);
