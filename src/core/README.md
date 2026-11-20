@@ -8,7 +8,7 @@ Current modules:
 - `inventory.js`: player wallet and item inventory, finite-stock shops, atomic buy/sell transactions and duplicate-safe ledgers.
 - `npc.js`: deterministic daily activity and location resolution, including overnight schedules, overlap validation and shared-clock population snapshots.
 - `world.js`: deterministic world clock, validated district/location/road records, neighbour lookup and lowest-cost road pathfinding.
-- `save.js`: versioned game snapshots with active-life/business ownership checks, world-clock validation and detached load copies.
+- `save.js`: versioned game snapshots with active-life/business ownership checks, world-clock validation, wallet/inventory, interaction consumption/event history, mission progress and detached load copies.
 - `missions.js`: deterministic mission definitions, objective progress, completion events and one-time reward-claim state.
 - `interactions.js`: validated local NPC conversations, item pickups, finite shop transactions, bus-stop travel, service interactions and mission-event bridging.
 
