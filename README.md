@@ -35,9 +35,10 @@ A small but real Lagos-inspired district with:
 
 ## Current development state
 
-**Foundation phase.** Engine-independent life and business rules are implemented and covered by passing automated GitHub Actions tests. The Unreal Engine project, 3D character, city, NPC visuals and playable district have not yet been built.
+**Foundation phase with a native Unreal project scaffold.** Engine-independent life and business rules are implemented and covered by passing automated GitHub Actions tests. A UE 5.8 C++ project skeleton now includes a native third-person character, camera, basic keyboard/mouse movement, jump and prototype GameMode. It has not yet been compiled or opened in Unreal; no playable 3D city, NPC visuals or district exists yet.
 
 - [Development status](DEVELOPMENT_STATUS.md)
+- [Unreal project foundation](docs/UNREAL_PROJECT_FOUNDATION.md)
 - [Architecture](ARCHITECTURE.md)
 - [Roadmap](ROADMAP.md)
 - [Open-source candidate audit](docs/OPEN_SOURCE_AUDIT.md)
