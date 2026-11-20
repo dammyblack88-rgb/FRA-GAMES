@@ -61,7 +61,8 @@ function boot() {
   for(const x of [-9,9]) box("pavement",x,.08,0,3,.16,220,materials.concrete,false);
 
   const obstacles=[];
-  function building(name,x,z,w,d,h,color,roofColor=materials.roof) {\n    obstacles.push({x,z,halfW:w/2+.8,halfD:d/2+.8});
+  function building(name,x,z,w,d,h,color,roofColor=materials.roof) {
+    obstacles.push({x,z,halfW:w/2+.8,halfD:d/2+.8});
     box(name,x,h/2,z,w,h,d,mat(color));
     box(name+" roof",x,h+.16,z,w+.5,.32,d+.5,roofColor);
     for(let y=2.2;y<h-1;y+=2.6){
