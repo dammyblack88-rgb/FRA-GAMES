@@ -10,6 +10,7 @@ Current modules:
 - `world.js`: deterministic world clock, validated district/location/road records, neighbour lookup and lowest-cost road pathfinding.
 - `save.js`: versioned game snapshots with active-life/business ownership checks, world-clock validation and detached load copies.
 - `missions.js`: deterministic mission definitions, objective progress, completion events and one-time reward-claim state.
+- `interactions.js`: validated local NPC conversations, item pickups, finite shop transactions, bus-stop travel, service interactions and mission-event bridging.
 
 These are domain foundations, not a playable 3D game and not yet connected to Unreal Engine. Keep rendering, input, animation and world presentation in the game client. The logical road graph and world clock are engine-independent simulation contracts; City Form remains a separately pinned upstream reference. `src/content/first-district.js` supplies the initial fictional Lagos neighbourhood layout and six resident schedules as testable seed content. When the engine integration is ready, connect the simulation through FRA GAMES-owned interfaces and retain parity tests.
 
