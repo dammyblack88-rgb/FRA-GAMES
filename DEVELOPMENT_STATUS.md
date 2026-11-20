@@ -31,33 +31,34 @@ These are headless domain-logic tests. They do not prove that a 3D game, Unreal 
 
 ## Not yet implemented
 
-- No Unreal Engine project or selected final engine version.
+- Unreal Engine target selected: **UE 5.8**. The engine/editor is not installed and no FRA GAMES Unreal project has been generated yet.
 - No playable 3D character or camera.
 - No Lagos district or explorable world.
 - No visual NPCs, traffic or crowds. NPC schedule rules exist only as engine-independent code.
 - No connected in-game business interaction or customer AI.
 - No production save backend or UI.
 - No multiplayer or creator tools.
-- No external game code or third-party art assets imported.
+- Two upstream repositories are pinned as Git submodules (not merged into core): City Form at `ThirdParty/CityForm` and KinetiForge Vehicles at `Plugins/KinetiForgeVehicles`. They have not yet been compiled, enabled or validated inside a FRA GAMES Unreal project.
+- No third-party art assets have been imported.
 
 ## Open-source review decisions
 
-- City Form: MIT city-simulation reference; Windows compatibility not yet verified by its maintainers.
-- KinetiForge Vehicle System: MIT vehicle physics candidate for a later UE compatibility spike.
+- City Form: MIT city-simulation reference, pinned to `90810c86099a6e904d6a2e3bf17886aeb1b70fc5`; its project descriptor targets UE 5.8. It remains a pre-alpha reference, not a complete open-world game.
+- KinetiForge Vehicle System: MIT vehicle physics plugin, pinned to `7b918afa47e824f21eac3a6dfd3543979cc37ab5`; UE 5.8 compatibility is unverified for this exact pinned revision and must pass a compile/runtime spike.
 - ALIS: modular Unreal architecture reference; component-specific licences make casual copying inappropriate.
 - GT-Caliber: MIT game code, but its major asset submodule is private/gated and separately licensed; not selected as the base.
 - Unreal Open World Starter: Apache-2.0 framework reference with third-party component notices; do not merge the whole bundle blindly.
 - City Generator: MIT workflow reference, with Houdini/Unreal and OpenStreetMap data obligations.
 
-No third-party candidate is yet approved for import. Details and links are in docs/OPEN_SOURCE_AUDIT.md.
+These two sources are approved for isolated submodule tracking only, not production integration. Details and setup instructions are in `docs/OPEN_SOURCE_AUDIT.md` and `docs/UPSTREAM_ENGINE_SETUP.md`.
 
 ## Immediate engineering sequence
 
 1. Continue expanding and testing the engine-independent life/economy rules.
 2. Define first-district world entities, roads, plots, shops and NPC schedule contracts.
-3. Prepare an Unreal integration boundary without importing an unverified engine version or asset bundle.
-4. When a capable workstation is available, select and validate the UE version, then run a small Windows vertical slice.
-5. Integrate city and vehicle modules only after build, licence and performance gates pass.
+3. When a capable workstation is available, install UE 5.8 and generate the FRA GAMES Unreal project.
+4. Compile City Form and KinetiForge in isolation; validate the Windows toolchain, runtime behavior, licence notices and performance.
+5. Integrate only the selected city-simulation and vehicle systems behind FRA GAMES-owned interfaces.
 
 ## Hardware and cloud constraints
 
