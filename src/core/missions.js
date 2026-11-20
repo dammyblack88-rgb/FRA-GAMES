@@ -57,7 +57,9 @@ export function recordMissionProgress(state, objectiveType, amount, occurredAt, 
     const progress = objective.progress + added;
     return { ...objective, progress, completed: progress >= objective.target };
   });
-  if (!state.objectives.some(objective => objective.type === objectiveType && !objective.completed && matchesContext(objective))) return clone(state);
+  if (!state.objectives.some(objective => objective.type === objectiveType && !objective.completed && matchesContext(objective))) {
+    return { ...clone(state), eventHistory: [...state.eventHistory, { id: eventId.trim(), type: "mission-progress-ignored", objectiveType, occurredAt: occurredAt.trim() }] };
+  }
   const allComplete = objectives.every(objective => objective.completed);
   const runId = state.runId ?? state.missionId;
   if (allComplete && state.eventHistory.some(event => event.id === `${runId}:completed`)) throw new RangeError("Mission completion event id already exists");
