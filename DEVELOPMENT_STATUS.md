@@ -13,6 +13,7 @@
   - Safe continuation of an existing save without resetting identity/history.
   - Age progression and event history.
   - Akara stand business model with stock, sales, cash and ledger records.
+  - Deterministic NPC daily schedules, location/activity resolution, overnight shifts and overlap validation.
 - Dependency-free Node.js test suite and GitHub Actions workflow.
 - Open-source candidate desk audit in docs/OPEN_SOURCE_AUDIT.md.
 - No paid cloud GPU, subscription, AI API, asset or upgrade is authorised.
@@ -24,7 +25,7 @@ GitHub Actions workflow: Core gameplay tests.
 - Latest run: https://github.com/dammyblack88-rgb/FRA-GAMES/actions/runs/44803025296
 - Result observed: **success**.
 - The earlier workflow run for the workflow commit also completed successfully.
-- Tests cover life creation, invalid opening rejection, save continuation, age progression, business opening, sales, stock validation and restocking.
+- Tests cover life creation, invalid opening rejection, save continuation, age progression, business opening, sales, stock validation, restocking, NPC daily schedules, overnight shifts and invalid/overlapping schedules.
 
 These are headless domain-logic tests. They do not prove that a 3D game, Unreal project, graphics pipeline or playable city works.
 
@@ -33,7 +34,7 @@ These are headless domain-logic tests. They do not prove that a 3D game, Unreal 
 - No Unreal Engine project or selected final engine version.
 - No playable 3D character or camera.
 - No Lagos district or explorable world.
-- No visual NPCs, schedules, traffic or crowds.
+- No visual NPCs, traffic or crowds. NPC schedule rules exist only as engine-independent code.
 - No connected in-game business interaction or customer AI.
 - No production save backend or UI.
 - No multiplayer or creator tools.
