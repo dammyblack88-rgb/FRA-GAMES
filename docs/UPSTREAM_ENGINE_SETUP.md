@@ -7,7 +7,7 @@ FRA GAMES targets **Unreal Engine 5.8** for its first Unreal integration.
 Why 5.8:
 - City Form is an Unreal Engine 5.8 project and provides a useful, MIT-licensed city simulation and road/zoning reference.
 - Epic's official 5.8 release adds open-world authoring improvements, including World Partition/PCG workflow improvements and new terrain tooling.
-- This is a pinned project target, not a claim that the editor has been installed or that a game build has succeeded. UE 5.9 is currently in Preview; FRA GAMES will stay on the stable 5.8 target until 5.9 reaches a stable release and both upstream projects pass compatibility testing.
+- This is a pinned project target, not a claim that the editor has been installed or that a game build has succeeded. UE 5.9 is currently in Preview; FRA GAMES will stay on the stable 5.8 target until 5.9 reaches a stable release and both upstream projects pass compatibility testing. Epic's 5.9 Preview notes were updated on November 19, 2026: https://dev.epicgames.com/documentation/unreal-engine/unreal-engine-5-9-release-notes.
 
 Official engine download: https://www.unrealengine.com/download
 Official UE 5.8 hardware requirements: https://dev.epicgames.com/documentation/unreal-engine/hardware-and-software-specifications-for-unreal-engine
@@ -59,6 +59,6 @@ Official instructions: https://dev.epicgames.com/documentation/en-us/unreal-engi
 - Upstream repositories pinned: City Form and KinetiForge.
 - Submodule references committed: yes.
 - Unreal Engine installed: no.
-- Unreal project created for FRA GAMES: no.
+- Native C++ Unreal project scaffold created for FRA GAMES: yes (`FRAGames.uproject`); compile/editor verification: pending.
 - Upstream code compiled inside FRA GAMES: no.
 - Playable 3D game: no.
