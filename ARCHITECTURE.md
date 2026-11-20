@@ -1,7 +1,7 @@
 # FRA GAMES — Initial Architecture
 
-**Status:** Proposed foundation; not yet implemented.  
-**Engine decision:** Unreal Engine 5 is the leading candidate for the intended high-end game, but final engine and production pipeline decisions require a tested vertical slice on suitable hardware.
+**Status:** Initial architecture with engine-independent gameplay core and a native Unreal C++ project scaffold committed. The Unreal project has not yet been compiled or opened in the editor.  
+**Engine target:** Unreal Engine 5.8 for the first native integration; upstream plugin compatibility and the first playable slice remain unverified.
 
 ## 1. Product shape
 
@@ -90,7 +90,7 @@ High-fidelity human visuals require a dedicated character, animation, lighting a
 The implementation should keep these boundaries clear:
 
 - **Game client:** rendering, input, animation, UI and local presentation.
-- **Gameplay systems:** character state, missions, interaction, economy and simulation rules.
+- **Gameplay systems:** character state, missions, interaction, economy and simulation rules. Current headless modules cover life creation/continuation, age progression, akara-stand transactions, NPC schedules, world time, district locations and road-path queries.
 - **Persistence:** versioned saves and later server-authoritative player/world data.
 - **Online services:** identity, friends, multiplayer sessions and content delivery (later).
 - **Creator pipeline:** validated templates, moderation, publishing and versioning (later).
@@ -100,7 +100,9 @@ Do not introduce paid backend services or always-on infrastructure until there i
 
 ## 7. Engine and tooling strategy
 
-Unreal Engine 5 is the current leading candidate because the target includes high-fidelity open-world environments, vehicles, animation and large-scale world systems. It is not yet a locked implementation choice. Validate engine version, target hardware, licences, plugin compatibility and a small playable slice before importing large sample projects.
+Unreal Engine 5.8 is the current project target. The repository contains a native C++ project scaffold with Game/Editor targets, a player character, camera, basic input mappings and prototype GameMode. It has not yet been compiled or launched in the editor. City Form and KinetiForge are isolated, pinned submodules and are not runtime dependencies yet. Validate engine version, target hardware, licences, plugin compatibility and a small playable slice before integrating large sample projects.
+
+The first Unreal map should be created from the Open World template so World Partition, One File Per Actor, Data Layers and HLODs are configured by the engine. The first playable district scope and acceptance criteria are in [docs/FIRST_PLAYABLE_SLICE.md](docs/FIRST_PLAYABLE_SLICE.md).
 
 The current computer is suitable for repository work, gameplay rules, lightweight tools and remote collaboration, but not for authoring and rendering a large UE5 AAA city. Use browser/cloud coding where free quotas permit. Do not assume a free cloud coding workspace provides a high-end GPU.
 
