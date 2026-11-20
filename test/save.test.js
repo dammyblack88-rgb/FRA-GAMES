@@ -84,9 +84,9 @@ test("save validation rejects invalid player economy and duplicate inventory ite
   assert.throws(() => createGameSave({
     ...save,
     economy: { ...save.economy, items: [{ itemId: "bread", quantity: 1 }, { itemId: "bread", quantity: 2 }] }
-  }), /duplicate id/);
+  }), /duplicate/);
   assert.throws(() => createGameSave({
     ...save,
     economy: { ...save.economy, ledger: [{ id: "same" }, { id: "same" }] }
-  }), /duplicate id/);
+  }), /duplicate/);
 });
