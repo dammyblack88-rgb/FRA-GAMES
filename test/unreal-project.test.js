@@ -56,3 +56,21 @@ test("native world simulation subsystem exposes validated clock, district and ro
   assert.match(implementation, /Algo::Reverse/);
   assert.ok(existsSync(new URL("../docs/UNREAL_WORLD_SIMULATION_BRIDGE.md", import.meta.url)));
 });
+
+test("native player interaction component, interface and E-key binding are connected", () => {
+  for (const path of [
+    "Source/FRAGames/Public/FRAInteractable.h",
+    "Source/FRAGames/Public/FRAPlayerInteractionComponent.h",
+    "Source/FRAGames/Private/FRAPlayerInteractionComponent.cpp"
+  ]) assert.ok(existsSync(new URL("../" + path, import.meta.url)), `Missing interaction source: ${path}`);
+  const playerHeader = read("Source/FRAGames/Public/FRAPlayerCharacter.h");
+  const playerSource = read("Source/FRAGames/Private/FRAPlayerCharacter.cpp");
+  const input = read("Config/DefaultInput.ini");
+  assert.match(playerHeader, /UFRAPlayerInteractionComponent/);
+  assert.match(playerSource, /BindAction\(TEXT\("Interact"\), IE_Pressed/);
+  assert.match(playerSource, /InteractionComponent->TryInteract\(\)/);
+  assert.match(input, /ActionName="Interact",Key=E/);
+  const interaction = read("Source/FRAGames/Private/FRAPlayerInteractionComponent.cpp");
+  assert.match(interaction, /LineTraceSingleByChannel/);
+  assert.match(interaction, /Execute_Interact/);
+});
