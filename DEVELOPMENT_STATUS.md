@@ -4,7 +4,7 @@
 **Product identity:** NEXT WORLD  
 **Repository:** `dammyblack88-rgb/FRA-GAMES`  
 **Studio:** SimeonJr Studios  
-**Overall state:** Gameplay foundation and Unreal source scaffold. **69 headless tests pass. Not yet a playable 3D game or production release.** Development is now explicitly cloud-first; the founder's PC must not be a required build/render host.
+**Overall state:** Gameplay foundation, first browser-playable 3D MVP, and native Unreal source scaffold. The MVP is an early low-poly prototype; the Unreal project is not yet compiled. Development is cloud-first; the founder's PC must not be a required build/render host.
 
 ## Product boundary
 
@@ -85,6 +85,12 @@ See `docs/OPEN_SOURCE_AUDIT.md`, `docs/UPSTREAM_ENGINE_SETUP.md` and `LICENCE_AN
 - No sports career, club ownership, property construction, advanced career system, multiplayer, voice/AI runtime, creator marketplace or international map is implemented.
 - No packaged playable build or public release.
 
+## Browser MVP status
+
+A first real-time 3D browser prototype now lives in `mvp/`. It uses Three.js/WebGL, a third-person player, a compact Lagos-inspired blockout, four ambient NPCs, a Mama Kemi conversation, bread purchase and bus interaction mission, a local browser save and a small HUD. It is intended for free static hosting and early feedback. It is not a 2D/1D substitute, but it is also not the final Unreal production game. It has no server, multiplayer, account system, cloud save, advanced NPC AI, drivable vehicles or final art. The first public URL is conditional on GitHub Pages being enabled and its deployment workflow succeeding.
+
+The browser prototype is a low-cost validation client. Preserve the existing engine-independent gameplay rules and keep the production Unreal Engine 5.8 project intact; do not silently redefine the browser prototype as the final engine.
+
 ## Cloud-first development and build strategy
 
 The founder's personal workstation is not to be a required build server, rendering machine or always-on host. GitHub is the source of truth; free GitHub Actions runs lightweight gameplay tests and repository checks; a remote Unreal-capable build service or dedicated cloud agent must compile/cook/package the native UE5 project; a temporary remote GPU workstation is reserved for editor authoring and visual playtests. The cloud service must be selected only after engine-version, storage, GPU, region, security, licensing and total-cost checks.
@@ -93,14 +99,15 @@ Research candidates and the no-spend decision are recorded in `docs/CLOUD_FIRST_
 
 ## Immediate implementation order
 
-1. Keep free GitHub Actions gameplay tests and lightweight repository validation green.
-2. Establish the remote Unreal 5.8 build/editor environment without relying on the founder's PC; do not incur cost until explicitly approved.
-3. Compile the existing C++ project on that remote environment and fix real compiler errors.
-4. Create the Unreal Open World level, place the district blockout actor and PlayerStart, then verify movement, camera and collision in the actual 3D editor.
-5. Create Blueprint children for the first district's actual NPCs, shop, pickups, bus stop and services; connect the first mission.
-6. Wire live gameplay state into save/load and verify save → close/reopen → continue.
-7. Package and launch a Development build remotely; retain commit-linked logs and test evidence.
-8. Add vehicles and traffic only after the first 3D slice is stable; then expand NPC dialogue/routines and district life.
+1. Keep free GitHub Actions gameplay tests and lightweight repository validation green; syntax-check the browser MVP in CI.
+2. Publish and test the browser 3D MVP through GitHub Pages for early feedback, subject to Pages configuration and workflow success.
+3. Establish the remote Unreal 5.8 build/editor environment without relying on the founder's PC; do not incur cost until explicitly approved.
+4. Compile the existing C++ project on that remote environment and fix real compiler errors.
+5. Create the Unreal Open World level, place the district blockout actor and PlayerStart, then verify movement, camera and collision in the actual 3D editor.
+6. Create Blueprint children for the first district's actual NPCs, shop, pickups, bus stop and services; connect the first mission.
+7. Wire live gameplay state into save/load and verify save → close/reopen → continue.
+8. Package and launch a Development build remotely; retain commit-linked logs and test evidence.
+9. Add vehicles and traffic only after the first 3D slice is stable; then expand NPC dialogue/routines and district life.
 
 ## Definition of done
 
