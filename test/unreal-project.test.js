@@ -92,3 +92,15 @@ test("native Unreal save object and slot subsystem preserve versioned player-wor
   assert.match(subsystem, /ValidateSaveData/);
   assert.match(subsystem, /SchemaVersion != 1/);
 });
+
+test("reusable Unreal interactable actor exposes Blueprint interaction behavior", () => {
+  assert.ok(existsSync(new URL("../Source/FRAGames/Public/FRAWorldInteractableActor.h", import.meta.url)));
+  assert.ok(existsSync(new URL("../Source/FRAGames/Private/FRAWorldInteractableActor.cpp", import.meta.url)));
+  const header = read("Source/FRAGames/Public/FRAWorldInteractableActor.h");
+  const source = read("Source/FRAGames/Private/FRAWorldInteractableActor.cpp");
+  assert.match(header, /Blueprintable/);
+  assert.match(header, /ReceiveInteraction/);
+  assert.match(source, /GetInteractionPrompt_Implementation/);
+  assert.match(source, /CanInteract_Implementation/);
+  assert.match(source, /ReceiveInteraction\(InteractingActor\)/);
+});
