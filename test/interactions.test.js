@@ -159,6 +159,8 @@ test("targeted mission objective ignores unrelated NPCs and counts only the name
   const otherNpcEvent = { id: "talk-to-other", type: "npc-talked-to", targetId: "other-npc", payload: { npcId: "other-npc" }, occurredAt: at };
   const unchanged = applyWorldEventToMission(mission, otherNpcEvent);
   assert.equal(unchanged.objectives[0].progress, 0);
+  assert.equal(unchanged.eventHistory.at(-1).type, "world-interaction-ignored");
+  assert.throws(() => applyWorldEventToMission(unchanged, otherNpcEvent), /Duplicate mission event/);
   const mamaEvent = { id: "talk-to-mama", type: "npc-talked-to", targetId: "mama-kemi", payload: { npcId: "mama-kemi" }, occurredAt: at };
   const completed = applyWorldEventToMission(unchanged, mamaEvent);
   assert.equal(completed.status, "completed");
