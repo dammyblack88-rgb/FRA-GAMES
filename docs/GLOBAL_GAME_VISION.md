@@ -5,6 +5,16 @@
 **Studio:** SimeonJr Studios  
 **Core promise:** Choose a life. Live anywhere. Become anything. Build experiences other people can explore.
 
+## 0. Real-world connected platform experiences
+
+Alongside fictional game-world activities, THE GAME is intended to host genuine real-world digital experiences through permitted integrations. Players may enter native-feeling experiences for real livestreaming, creator channels, community interaction, media publishing, and supported communication/device functions. These are not merely simulations: where enabled, they must perform real actions through official provider APIs, approved device capabilities or services operated by the platform.
+
+Keep fictional and real-world layers clearly distinguished. Real account connections require informed consent, scoped permissions, secure token handling and revocation. Provider and operating-system restrictions must be respected; no universal WhatsApp or third-party streaming capability is assumed. Public broadcasts, posts, data sharing and payments require clear confirmation.
+
+The platform may eventually support a real creator economy, including funded cash, airtime, data, sponsorship and creator-fund rewards. These are real obligations, not fictional balances or guaranteed earnings. Launch only after funding, moderation, privacy, age protection, rights management, fraud controls, payout operations and applicable legal/tax requirements are ready.
+
+See [Real-World Connected Experiences](REAL_WORLD_CONNECTED_EXPERIENCES.md) for the dedicated product and architecture specification. This remains a vision, not a claim that integrations or payouts are already implemented.
+
 ## 1. Product definition
 
 THE GAME is a planned global 3D life-simulation and creator platform. It is one persistent player life expressed through compatible careers, activities, stories and adventures—not a collection of unrelated games with separate avatars and disconnected saves.
