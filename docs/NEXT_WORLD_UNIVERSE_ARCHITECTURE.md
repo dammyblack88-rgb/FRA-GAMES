@@ -43,7 +43,7 @@ Experiences may have different rules and competitive balance. They must not sile
 
 A character may move between careers over time. For example, the player can begin in a Lagos neighbourhood, develop as a footballer, invest in a club, own a music studio, build businesses and later enter civic leadership storylines. These are connected by the same identity and history.
 
-Not every activity must be available in the first release. The architecture should make later experiences possible without pretending they already exist. Career-specific progress can be stored in modules while shared identity, selected assets, money and world ownership remain governed by common rules.
+Not every activity must be available in the first release. The architecture should make later experiences possible without pretending they already exist. Career-specific progress can be stored in modules while shared identity, selected assets, money and world ownership remain governed by common rules. Mission objectives may require exact authored NPCs, shops, items, bus stops or services so unrelated actions cannot accidentally complete a story beat.
 
 ## 4. Player-led creation
 
