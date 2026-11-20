@@ -75,3 +75,20 @@ test("native player interaction component, interface and E-key binding are conne
   assert.match(interaction, /TickInterval = 0\.1f/);
   assert.match(interaction, /Execute_Interact/);
 });
+
+test("native Unreal save object and slot subsystem preserve versioned player-world state", () => {
+  for (const path of [
+    "Source/FRAGames/Public/FRAPlayerSaveGame.h",
+    "Source/FRAGames/Public/FRAPlayerSaveSubsystem.h",
+    "Source/FRAGames/Private/FRAPlayerSaveSubsystem.cpp"
+  ]) assert.ok(existsSync(new URL("../" + path, import.meta.url)), `Missing save source: ${path}`);
+  const saveType = read("Source/FRAGames/Public/FRAPlayerSaveGame.h");
+  const subsystem = read("Source/FRAGames/Private/FRAPlayerSaveSubsystem.cpp");
+  for (const field of ["Lives", "ActiveLifeId", "WalletNaira", "Experience", "Inventory", "Businesses", "NpcStates", "MissionRuns", "ConsumedInteractionTargetIds"]) {
+    assert.ok(saveType.includes(field), `Missing saved field: ${field}`);
+  }
+  assert.match(subsystem, /SaveGameToSlot/);
+  assert.match(subsystem, /LoadGameFromSlot/);
+  assert.match(subsystem, /ValidateSaveData/);
+  assert.match(subsystem, /SchemaVersion != 1/);
+});
