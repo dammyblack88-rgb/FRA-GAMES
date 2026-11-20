@@ -2,7 +2,7 @@ import { createFirstDistrict } from "./first-district.js";
 import { createInteractionRegistry } from "../core/interactions.js";
 
 export const firstDistrictInteractionTargets = Object.freeze([
-  { id: "npc-mama-kemi", type: "npc", name: "Mama Kemi", locationId: "neighbourhood-market" },
+  { id: "resident-mama-kemi", type: "npc", name: "Mama Kemi", locationId: "neighbourhood-market" },
   { id: "shop-market-stall", type: "shop", name: "Neighbourhood Provision Stall", locationId: "neighbourhood-market", shopId: "shop-market-stall" },
   { id: "pickup-market-bread", type: "item", name: "Dropped Bread", locationId: "neighbourhood-market", itemId: "bread", quantity: 1 },
   { id: "transport-community-bus", type: "bus-stop", name: "Community Bus Stop", locationId: "bus-stop", destinations: ["community-junction", "neighbourhood-market"] },
