@@ -41,6 +41,7 @@ const shop = () => createShop({
   prices: { bread: 500 }, createdAt: "2026-11-20T10:00:00.000Z"
 });
 const at = "2026-11-20T10:05:00.000Z";
+const presentNpc = [{ npcId: "mama-kemi", locationId: "market", activity: "selling", scheduled: true }];
 
 test("creates a validated registry and rejects duplicate or unknown targets", () => {
   assert.equal(registry().targets.length, 5);
