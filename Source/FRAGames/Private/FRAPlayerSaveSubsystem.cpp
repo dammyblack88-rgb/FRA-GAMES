@@ -50,10 +50,16 @@ bool UFRAPlayerSaveSubsystem::ValidateSaveData(const UFRAPlayerSaveGame* SaveDat
     for (const FFRASavedMissionRun& Mission : SaveData->MissionRuns)
     {
         if (Mission.MissionId.IsNone() || Mission.RunId.IsEmpty() || MissionRunIds.Contains(Mission.RunId)
-            || Mission.Objectives.IsEmpty() || (Mission.Status != TEXT("active") && Mission.Status != TEXT("completed"))
-            || (Mission.Status == TEXT("active") && (Mission.bHasCompletedAt || Mission.bRewardClaimed))
-            || (Mission.Status == TEXT("completed") && !Mission.bHasCompletedAt)) return false;
+            || Mission.Objectives.IsEmpty() || (Mission.Status != FName(TEXT("active")) && Mission.Status != FName(TEXT("completed")))
+            || (Mission.Status == FName(TEXT("active")) && (Mission.bHasCompletedAt || Mission.bRewardClaimed))
+            || (Mission.Status == FName(TEXT("completed")) && !Mission.bHasCompletedAt)) return false;
         MissionRunIds.Add(Mission.RunId);
+        TSet<FString> MissionEventIds;
+        for (const FString& EventId : Mission.EventIds)
+        {
+            if (EventId.IsEmpty() || MissionEventIds.Contains(EventId)) return false;
+            MissionEventIds.Add(EventId);
+        }
         TSet<FName> ObjectiveIds;
         bool bAllObjectivesComplete = true;
         for (const FFRASavedMissionObjective& Objective : Mission.Objectives)
@@ -66,6 +72,14 @@ bool UFRAPlayerSaveSubsystem::ValidateSaveData(const UFRAPlayerSaveGame* SaveDat
             bAllObjectivesComplete &= Objective.bCompleted;
         }
         if ((Mission.Status == TEXT("completed")) != bAllObjectivesComplete) return false;
+    }
+
+    TSet<FString> TransactionIds;
+    for (const FFRASavedEconomyTransaction& Transaction : SaveData->EconomyTransactions)
+    {
+        if (Transaction.TransactionId.IsEmpty() || Transaction.TransactionType.IsNone()
+            || Transaction.AmountNaira < 0 || Transaction.Experience < 0 || TransactionIds.Contains(Transaction.TransactionId)) return false;
+        TransactionIds.Add(Transaction.TransactionId);
     }
 
     TSet<FName> ConsumedIds;
