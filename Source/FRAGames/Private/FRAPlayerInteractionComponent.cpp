@@ -1,14 +1,21 @@
 #include "FRAPlayerInteractionComponent.h"
 
 #include "FRAInteractable.h"
-#include "Camera/PlayerCameraManager.h"
 #include "Engine/World.h"
 #include "GameFramework/Controller.h"
 #include "GameFramework/Pawn.h"
 
 UFRAPlayerInteractionComponent::UFRAPlayerInteractionComponent()
 {
-    PrimaryComponentTick.bCanEverTick = false;
+    PrimaryComponentTick.bCanEverTick = true;
+    PrimaryComponentTick.bStartWithTickEnabled = true;
+    PrimaryComponentTick.TickInterval = 0.1f;
+}
+
+void UFRAPlayerInteractionComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
+{
+    Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
+    RefreshTarget();
 }
 
 bool UFRAPlayerInteractionComponent::RefreshTarget()
