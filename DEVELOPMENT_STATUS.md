@@ -20,6 +20,7 @@
   - Validated district locations and one-way/two-way road connections.
   - Lowest-cost road pathfinding with disconnected-route handling.
 - Versioned game-save snapshots with player-life references, business ownership integrity, world-clock validation and detached load/restore.
+- Mission definitions, typed objectives, deterministic progress/completion events and reward-claim state with duplicate-event protection.
 - Native Unreal world-simulation bridge source: per-world clock state, pause/time scale, validated district graph and Dijkstra routing exposed to Blueprint.
 - Dependency-free Node.js test suite and GitHub Actions workflow.
 - Open-source candidate desk audit in docs/OPEN_SOURCE_AUDIT.md.
@@ -44,6 +45,7 @@ These are headless domain-logic tests. They do not prove that a 3D game, Unreal 
 - Native player character and camera source classes exist, but there is no compiled or visually verified 3D character yet.
 - Native `UFRAWorldSimulationSubsystem` and reflected world/road/route data structures are committed; C++ compilation and runtime parity remain unverified.
 - Versioned save snapshot logic and tests are committed in `src/core/save.js` and `test/save.test.js`; this is an in-memory schema/validation layer, not cloud or disk persistence.
+- Mission rules and tests are committed in `src/core/missions.js` and `test/missions.test.js`; no mission UI, world triggers, persistent reward ledger or multiplayer authority is connected yet.
 - Structural Node tests now check that the native world subsystem API and implementation are present. This is source-structure coverage only.
 - First playable Lagos-inspired neighbourhood is scoped in `docs/FIRST_PLAYABLE_SLICE.md`; no 3D district or explorable world has been built yet.
 - No visual NPCs, traffic or crowds. NPC population/schedule rules and first-district seed content exist only as engine-independent code; no 3D actors or Unreal district level have been created.
