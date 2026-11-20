@@ -81,6 +81,9 @@ function validateGameSave(save) {
     let allObjectivesCompleted = true;
     for (const objective of mission.objectives) {
       requireText(objective.type, "mission objective type");
+      for (const field of ["targetId", "itemId", "shopId", "busStopId", "serviceId"]) {
+        if (objective[field] !== undefined) requireText(objective[field], `mission objective ${field}`);
+      }
       if (!Number.isSafeInteger(objective.target) || objective.target < 1 || !Number.isSafeInteger(objective.progress) || objective.progress < 0
           || objective.progress > objective.target || typeof objective.completed !== "boolean" || objective.completed !== (objective.progress >= objective.target)) throw new TypeError("mission objective progress is invalid");
       if (!objective.completed) allObjectivesCompleted = false;
