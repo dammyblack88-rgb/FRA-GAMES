@@ -9,6 +9,10 @@ NEXT WORLD is a connected, expandable game universe. It is not a collection of u
 
 Players can live original stories, explore a richly simulated world, build businesses and communities, pursue sports and entertainment careers, take on missions and eventually create and share approved experiences. A football career, business empire or later original action/superhero chapter should remain part of the same connected identity—not a disconnected restart.
 
+## Product scope and naming
+
+NEXT WORLD is the connected-world game identity. FRA GAMES is this existing repository/workspace. The separately discussed free online/offline games-library platform is a different product and must not be confused with NEXT WORLD. See [Project boundaries](docs/PROJECT_BOUNDARIES.md).
+
 ## Development principles
 
 1. **One coherent universe:** consistent presentation, controls, identity, progression and persistent history.
