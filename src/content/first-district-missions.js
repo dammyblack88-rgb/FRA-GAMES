@@ -7,9 +7,9 @@ export const firstDistrictMissionDefinitions = Object.freeze([
     title: "Your First Morning",
     description: "Meet a familiar face at the market, pick up a few provisions and find your way around the neighbourhood.",
     objectives: [
-      { id: "greet-mama-kemi", type: "talk-to-npc", description: "Greet Mama Kemi at the market", target: 1 },
-      { id: "buy-provisions", type: "buy-item", description: "Buy an item from the provision stall", target: 1 },
-      { id: "ride-the-bus", type: "travel-by-bus", description: "Take a community bus ride", target: 1 }
+      { id: "greet-mama-kemi", type: "talk-to-npc", targetId: "resident-mama-kemi", description: "Greet Mama Kemi at the market", target: 1 },
+      { id: "buy-provisions", type: "buy-item", targetId: "shop-market-stall", shopId: "shop-market-stall", itemId: "bread", description: "Buy bread from the provision stall", target: 1 },
+      { id: "ride-the-bus", type: "travel-by-bus", targetId: "transport-community-bus", busStopId: "transport-community-bus", description: "Take a community bus ride", target: 1 }
     ],
     reward: { cashNaira: 750, experience: 100 }
   })
