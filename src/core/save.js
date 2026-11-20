@@ -63,13 +63,13 @@ function validateGameSave(save) {
     requireRecords(state.events, "interactionState.events");
   }
   if (!Array.isArray(save.missionStates ?? [])) throw new TypeError("missionStates must be an array");
-  const missionIds = new Set();
+  const missionRunIds = new Set();
   for (const [index, mission] of (save.missionStates ?? []).entries()) {
     if (!mission || mission.schemaVersion !== 1) throw new TypeError(`missionStates[${index}] is invalid or unsupported`);
     const missionId = requireText(mission.missionId, `missionStates[${index}].missionId`);
-    if (missionIds.has(missionId)) throw new RangeError("missionStates contains duplicate mission id");
-    missionIds.add(missionId);
-    if (mission.runId !== undefined) requireText(mission.runId, "mission.runId");
+    const runId = mission.runId === undefined ? missionId : requireText(mission.runId, "mission.runId");
+    if (missionRunIds.has(runId)) throw new RangeError("missionStates contains duplicate mission run id");
+    missionRunIds.add(runId);
     if (!["active", "completed"].includes(mission.status)) throw new TypeError("mission status is invalid");
     requireText(mission.startedAt, "mission.startedAt");
     if (mission.status === "completed") requireText(mission.completedAt, "mission.completedAt");
