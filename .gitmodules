@@ -1,0 +1,6 @@
+[submodule "ThirdParty/CityForm"]
+	path = ThirdParty/CityForm
+	url = https://github.com/JonathanWMorris/city-form.git
+[submodule "Plugins/KinetiForgeVehicles"]
+	path = Plugins/KinetiForgeVehicles
+	url = https://github.com/myoozy/KinetiForge-Vehicle-System.git
