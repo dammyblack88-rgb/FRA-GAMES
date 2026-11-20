@@ -72,7 +72,7 @@ The Unreal project must treat the logical world state as authoritative; actors a
 The slice is complete only when all of the following are demonstrated in an Unreal build:
 
 ### Player and life
-- [ ] Player can move, turn the camera, jump and interact.\n- [ ] Player can talk to a resident only when that resident is actually present, pick up an item once, buy/sell from a finite-stock shop, use a service and travel to an authored bus destination.\n- [ ] World interaction events advance matching mission objectives once; persistent save integration is a separate follow-up.
+- [ ] Player can move, turn the camera, jump and interact.\n- [ ] Player can talk to a resident only when that resident is actually present, pick up an item once, buy/sell from a finite-stock shop, use a service and travel to an authored bus destination.\n- [ ] World interaction events advance matching mission objectives once; interaction consumption, event history and mission progress are included in the validated versioned save snapshot.
 - [ ] New Life creates a distinct character save.
 - [ ] Continue Life restores the same character and business state.
 - [ ] Save/load survives closing and reopening the game.
