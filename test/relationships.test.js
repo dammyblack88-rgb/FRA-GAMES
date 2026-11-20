@@ -31,8 +31,13 @@ test("clamps relationship scores to the supported range", () => {
   let state = createRelationshipState("player-1");
   state = applyRelationshipEvent(state, {
     eventId: "gift-1", targetId: "npc-1", dimension: "affection",
-    delta: 150, occurredAt: "2026-11-20"
+    delta: 90, occurredAt: "2026-11-20"
   });
+  state = applyRelationshipEvent(state, {
+    eventId: "gift-2", targetId: "npc-1", dimension: "affection",
+    delta: 20, occurredAt: "2026-11-20"
+  });
+  assert.equal(getRelationship(state, "npc-1").affection, 100);
   state = applyRelationshipEvent(state, {
     eventId: "betrayal-1", targetId: "npc-1", dimension: "affection",
     delta: -100, occurredAt: "2026-11-21"
