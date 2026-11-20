@@ -19,7 +19,11 @@ export function createMission({ id, title, description, objectives, reward, avai
     requireText(objective.type, `objectives[${index}].type`);
     requireText(objective.description, `objectives[${index}].description`);
     requireWhole(objective.target, `objectives[${index}].target`, 1);
-    return { id: objectiveId, type: objective.type.trim(), description: objective.description.trim(), target: objective.target };
+    const safe = { id: objectiveId, type: objective.type.trim(), description: objective.description.trim(), target: objective.target };
+    for (const field of ["targetId", "itemId", "shopId", "busStopId", "serviceId"]) {
+      if (objective[field] !== undefined) safe[field] = requireText(objective[field], `objectives[${index}].${field}`);
+    }
+    return safe;
   });
   if (!reward || typeof reward !== "object") throw new TypeError("Mission reward is required");
   requireWhole(reward.cashNaira, "reward.cashNaira"); requireWhole(reward.experience, "reward.experience");
@@ -31,27 +35,32 @@ export function createMission({ id, title, description, objectives, reward, avai
 export function startMission(definition, startedAt, runId = `${definition?.id}:${startedAt}`) {
   requireText(startedAt, "startedAt"); requireText(runId, "runId");
   if (!definition || definition.schemaVersion !== 1) throw new TypeError("A supported mission definition is required");
-  return { schemaVersion: 1, missionId: definition.id, runId: runId.trim(), status: "active", startedAt,
+  const normalizedRunId = runId.trim();
+  return { schemaVersion: 1, missionId: definition.id, runId: normalizedRunId, status: "active", startedAt: startedAt.trim(),
     completedAt: null, rewardClaimed: false,
-    objectives: definition.objectives.map(objective => ({ id: objective.id, type: objective.type, target: objective.target, progress: 0, completed: false })),
-    eventHistory: [{ id: `${runId}:started`, type: "mission-started", occurredAt: startedAt }] };
+    objectives: definition.objectives.map(objective => ({ ...clone(objective), progress: 0, completed: false })),
+    eventHistory: [{ id: `${normalizedRunId}:started`, type: "mission-started", occurredAt: startedAt.trim() }] };
 }
 
-export function recordMissionProgress(state, objectiveType, amount, occurredAt, eventId) {
+export function recordMissionProgress(state, objectiveType, amount, occurredAt, eventId, context = {}) {
   if (!state || state.schemaVersion !== 1 || state.status !== "active") throw new TypeError("An active mission is required");
   requireText(objectiveType, "objectiveType"); requireWhole(amount, "amount", 1);
   requireText(occurredAt, "occurredAt"); requireText(eventId, "eventId");
   if (state.eventHistory.some(event => event.id === eventId)) throw new RangeError("Duplicate mission event id");
+  if (!context || typeof context !== "object" || Array.isArray(context)) throw new TypeError("context must be an object");
+  const matchesContext = objective => ["targetId", "itemId", "shopId", "busStopId", "serviceId"]
+    .every(field => objective[field] === undefined || objective[field] === context[field]);
   let remaining = amount;
   const objectives = state.objectives.map(objective => {
-    if (objective.type !== objectiveType || objective.completed || remaining === 0) return objective;
+    if (objective.type !== objectiveType || objective.completed || remaining === 0 || !matchesContext(objective)) return objective;
     const added = Math.min(remaining, objective.target - objective.progress); remaining -= added;
     const progress = objective.progress + added;
     return { ...objective, progress, completed: progress >= objective.target };
   });
-  if (!state.objectives.some(objective => objective.type === objectiveType && !objective.completed)) return clone(state);
+  if (!state.objectives.some(objective => objective.type === objectiveType && !objective.completed && matchesContext(objective))) return clone(state);
   const allComplete = objectives.every(objective => objective.completed);
   const runId = state.runId ?? state.missionId;
+  if (allComplete && state.eventHistory.some(event => event.id === `${runId}:completed`)) throw new RangeError("Mission completion event id already exists");
   return { ...clone(state), objectives, status: allComplete ? "completed" : "active",
     completedAt: allComplete ? occurredAt : null,
     eventHistory: [...state.eventHistory, { id: eventId, type: "mission-progress", objectiveType, amount, occurredAt },
