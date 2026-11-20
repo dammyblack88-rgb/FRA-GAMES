@@ -70,3 +70,27 @@ test("mission definitions reject duplicate objectives and invalid rewards", () =
   assert.throws(() => createMission({ id: "bad", title: "Bad", description: "Bad",
     objectives: [{ id: "one", type: "x", description: "one", target: 1 }], reward: { cashNaira: -1, experience: 1 } }), /cashNaira/);
 });
+
+test("mission objectives can require a specific authored target and item", () => {
+  const mission = createMission({
+    id: "targeted-mission", title: "Targeted", description: "Only the named action counts",
+    objectives: [{ id: "buy-bread", type: "buy-item", description: "Buy bread at the named shop", target: 1,
+      targetId: "shop-market", shopId: "shop-market", itemId: "bread" }],
+    reward: { cashNaira: 0, experience: 10 }
+  });
+  const state = startMission(mission, "2026-11-20T08:00:00.000Z", "targeted-run");
+  assert.equal(state.objectives[0].targetId, "shop-market");
+  const advanced = recordMissionProgress(state, "buy-item", 1, "2026-11-20T08:01:00.000Z", "buy-bread-event", { targetId: "shop-market", shopId: "shop-market", itemId: "bread" });
+  assert.equal(advanced.status, "completed");
+  assert.equal(recordMissionProgress(state, "buy-item", 1, "2026-11-20T08:01:00.000Z", "wrong-shop-event", { targetId: "other-shop", shopId: "other-shop", itemId: "bread" }).status, "active");
+});
+
+test("mission start trims run identifiers and rejects reserved completion event collisions", () => {
+  const mission = createMission({ id: "reserved", title: "Reserved", description: "Reserved id check",
+    objectives: [{ id: "finish", type: "finish", description: "Finish", target: 1 }],
+    reward: { cashNaira: 0, experience: 0 } });
+  const state = startMission(mission, "2026-11-20T08:00:00.000Z", "  reserved-run  ");
+  assert.equal(state.runId, "reserved-run");
+  assert.throws(() => recordMissionProgress({ ...state, eventHistory: [...state.eventHistory, { id: "reserved-run:completed" }] },
+    "finish", 1, "2026-11-20T08:01:00.000Z", "finish-event"), /completion event id already exists/);
+});
