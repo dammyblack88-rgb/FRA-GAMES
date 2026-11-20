@@ -5,7 +5,7 @@ import { createMission, startMission } from "../src/core/missions.js";
 import { createPlayerEconomy, createShop } from "../src/core/inventory.js";
 import {
   createInteractionRegistry, performWorldInteraction, applyWorldEventToMission
-} from "./interactions.js";
+} from "../src/core/interactions.js";
 
 const district = () => createDistrict({
   id: "district-one", name: "Neighbourhood One", region: "Lagos",
