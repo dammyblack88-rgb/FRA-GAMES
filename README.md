@@ -43,6 +43,18 @@ A small but real Lagos-inspired district with:
 - [Open-source candidate audit](docs/OPEN_SOURCE_AUDIT.md)
 - [Licence and asset register](LICENCE_AND_ASSET_REGISTER.md)
 
+## Engine and upstream projects
+
+The first Unreal integration target is **Unreal Engine 5.8**. Two reviewed upstream repositories are pinned as Git submodules: City Form (city simulation/roads/zoning reference) and KinetiForge Vehicles (candidate vehicle-physics plugin). They are isolated and are not yet compiled or enabled in a playable FRA GAMES build.
+
+Clone the repository and its pinned upstream sources with:
+
+```powershell
+git clone --recurse-submodules https://github.com/dammyblack88-rgb/FRA-GAMES.git
+```
+
+See [Engine and upstream setup](docs/UPSTREAM_ENGINE_SETUP.md) for exact pinned commits, compatibility caveats, hardware requirements and Unreal Engine source-access rules.
+
 ## Run the gameplay-core tests
 
 Requires Node.js 20 or newer:
