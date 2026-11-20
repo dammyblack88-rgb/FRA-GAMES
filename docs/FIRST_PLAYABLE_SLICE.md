@@ -1,7 +1,7 @@
 # First Playable Slice — Lagos Neighbourhood
 
 **Milestone:** first playable vertical slice  
-**Status:** scope defined; not yet built in Unreal  
+**Status:** scope defined; procedural greybox actor source committed, but no level has been built or visually verified in Unreal  
 **Engine target:** Unreal Engine 5.8  
 **Working area:** fictional neighbourhood inspired by Agege, Lagos, Nigeria
 
@@ -65,14 +65,16 @@ The engine-independent core now provides:
 - Local interaction registry for resident conversations (only when the NPC schedule snapshot places them at the player location), one-time item pickups, shop buy/sell transactions, bus-stop travel to authored destinations and service interactions.
 - World interaction events can advance matching mission objectives with event-ID replay protection. First-district target and provision-stall stock seeds are in `src/content/first-district-interactions.js`.
 
-The Unreal project must treat the logical world state as authoritative; actors and meshes visualize it. Do not make the simulation depend on every NPC Actor being loaded in the level.
+The Unreal project must treat the logical world state as authoritative; actors and meshes visualize it. A procedural blockout actor source now creates the ground, eight road corridors and the seven first-district place volumes; see [docs/FIRST_DISTRICT_BLOCKOUT.md](FIRST_DISTRICT_BLOCKOUT.md). The actor has not yet been placed in an Unreal level or tested. Do not make the simulation depend on every NPC Actor being loaded in the level.
 
 ## Acceptance criteria
 
 The slice is complete only when all of the following are demonstrated in an Unreal build:
 
 ### Player and life
-- [ ] Player can move, turn the camera, jump and interact.\n- [ ] Player can talk to a resident only when that resident is actually present, pick up an item once, buy/sell from a finite-stock shop, use a service and travel to an authored bus destination.\n- [ ] World interaction events advance matching mission objectives once; interaction consumption, event history and mission progress are included in the validated versioned save snapshot.
+- [ ] Player can move, turn the camera, jump and interact.
+- [ ] Player can talk to a resident only when that resident is actually present, pick up an item once, buy/sell from a finite-stock shop, use a service and travel to an authored bus destination.
+- [ ] World interaction events advance matching mission objectives once; interaction consumption, event history and mission progress are included in the validated versioned save snapshot.
 - [ ] New Life creates a distinct character save.
 - [ ] Continue Life restores the same character and business state.
 - [ ] Save/load survives closing and reopening the game.
@@ -113,7 +115,7 @@ The slice is complete only when all of the following are demonstrated in an Unre
 ## Build order
 
 1. Compile the native UE project and verify the player/camera/jump.
-2. Create a greybox Open World test level and a home-to-market route.
+2. Create a greybox Open World test level, place AFRAFirstDistrictBlockout, add a PlayerStart near the home compound and verify the home-to-market route.
 3. Connect the world clock and logical district model to an Unreal subsystem.
 4. Add interaction and the akara stand loop.
 5. Add scheduled NPCs and save/load.
