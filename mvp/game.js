@@ -20,10 +20,19 @@ function boot() {
   scene.background = new THREE.Color(0x9bc0c5);
   scene.fog = new THREE.Fog(0x9bc0c5, 65, 190);
   const camera = new THREE.PerspectiveCamera(66, innerWidth / innerHeight, .1, 500);
-  const renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: "high-performance" });
-  renderer.setPixelRatio(Math.min(devicePixelRatio, 1.5));
+  // The browser MVP scales its rendering cost to the detected device. This is a
+  // prototype quality control, not the final Unreal Engine visual-quality system.
+  const qualityButton = document.querySelector("#quality-toggle");
+  const qualityModes = ["auto", "low", "balanced", "high"];
+  let qualityMode = (() => {
+    try {
+      const saved = localStorage.getItem("next-world-graphics-quality");
+      return qualityModes.includes(saved) ? saved : "auto";
+    } catch { return "auto"; }
+  })();
+  const renderer = new THREE.WebGLRenderer({ antialias: false, powerPreference: "low-power" });
   renderer.setSize(innerWidth, innerHeight);
-  renderer.shadowMap.enabled = true;
+  renderer.shadowMap.enabled = false;
   renderer.shadowMap.type = THREE.PCFSoftShadowMap;
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   viewport.appendChild(renderer.domElement);
@@ -35,6 +44,50 @@ function boot() {
   sun.shadow.camera.left = -70; sun.shadow.camera.right = 70;
   sun.shadow.camera.top = 70; sun.shadow.camera.bottom = -70;
   scene.add(sun);
+
+  function detectAutoQuality() {
+    let gpuName = "";
+    try {
+      const gl = renderer.getContext();
+      const debugInfo = gl.getExtension("WEBGL_debug_renderer_info");
+      if (debugInfo) gpuName = gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL) || "";
+    } catch { /* GPU details may be hidden by browser privacy settings. */ }
+    const memory = Number(navigator.deviceMemory) || 0;
+    const cores = Number(navigator.hardwareConcurrency) || 0;
+    if (/Intel.*HD Graphics 5[0-9]{2}/i.test(gpuName) || /Intel.*UHD Graphics/i.test(gpuName)) return "low";
+    if ((memory > 0 && memory <= 8) || (cores > 0 && cores <= 4)) return "low";
+    if (memory >= 16 && cores >= 8 && !/Intel.*(HD|UHD) Graphics/i.test(gpuName)) return "high";
+    return "balanced";
+  }
+
+  function applyGraphicsQuality() {
+    const activeMode = qualityMode === "auto" ? detectAutoQuality() : qualityMode;
+    const profiles = {
+      low: { pixelRatio: 0.9, shadows: false, shadowMap: 512 },
+      balanced: { pixelRatio: 1.15, shadows: true, shadowMap: 768 },
+      high: { pixelRatio: 1.5, shadows: true, shadowMap: 1536 }
+    };
+    const profile = profiles[activeMode];
+    renderer.setPixelRatio(Math.min(devicePixelRatio || 1, profile.pixelRatio));
+    renderer.shadowMap.enabled = profile.shadows;
+    sun.castShadow = profile.shadows;
+    sun.shadow.mapSize.set(profile.shadowMap, profile.shadowMap);
+    sun.shadow.needsUpdate = true;
+    renderer.setSize(innerWidth, innerHeight);
+    qualityButton.textContent = qualityMode === "auto"
+      ? "QUALITY: AUTO (" + activeMode.toUpperCase() + ")"
+      : "QUALITY: " + qualityMode.toUpperCase();
+    qualityButton.setAttribute("aria-label", "Graphics quality is " + qualityMode + ". Click to change.");
+  }
+
+  qualityButton.addEventListener("click", () => {
+    const currentIndex = qualityModes.indexOf(qualityMode);
+    qualityMode = qualityModes[(currentIndex + 1) % qualityModes.length];
+    try { localStorage.setItem("next-world-graphics-quality", qualityMode); } catch { /* Continue for this session. */ }
+    applyGraphicsQuality();
+    notify("Graphics quality: " + qualityMode.toUpperCase());
+  });
+  applyGraphicsQuality();
 
   const mat = (color, roughness=.9) => new THREE.MeshStandardMaterial({ color, roughness });
   const materials = {
