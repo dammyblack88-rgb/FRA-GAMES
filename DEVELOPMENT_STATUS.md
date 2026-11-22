@@ -6,6 +6,15 @@
 **Studio:** SimeonJr Studios  
 **Overall state:** Gameplay foundation, first browser-playable 3D MVP, and native Unreal source scaffold. The MVP is an early low-poly prototype; the Unreal project is not yet compiled. Development is cloud-first; the founder's PC must not be a required build/render host.
 
+## 2026-11-22 incremental graphics milestone
+
+- Added an MVP graphics-quality control with Auto, Low, Balanced and High profiles.
+- Auto checks available WebGL GPU identification and device-memory/CPU hints; Low disables real-time shadows and caps render resolution for integrated graphics.
+- The quality selection is stored locally in the browser. Browser privacy may hide GPU identity, so manual Low selection remains available.
+- Added `docs/VISUAL_QUALITY_AND_SCALING.md` defining the long-term high-fidelity art/engineering pipeline, platform tiers and small-chunk validation rules.
+- This is a rendering-cost control for the browser MVP, not a GTA 6-level visual upgrade. The current low-poly art remains a placeholder, and the Unreal Engine 5.8 project is still not compiled or runtime-verified.
+- No paid services, assets, cloud resources or upgrades were introduced.
+
 ## Product boundary
 
 NEXT WORLD is the original connected-world game IP being developed in this repository. FRA GAMES is the repository/workspace and SimeonJr Studios project label in this workstream. The earlier FRA GAMES free games-library/launcher concept (a searchable collection of independently licensed online/offline games) is a separate product idea; it must not be confused with NEXT WORLD or used as a reason to combine unrelated games into NEXT WORLD.
