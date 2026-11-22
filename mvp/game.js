@@ -55,7 +55,7 @@ function boot() {
     const memory = Number(navigator.deviceMemory) || 0;
     const cores = Number(navigator.hardwareConcurrency) || 0;
     if (/Intel.*HD Graphics 5[0-9]{2}/i.test(gpuName) || /Intel.*UHD Graphics/i.test(gpuName)) return "low";
-    if ((memory > 0 && memory <= 4) || (cores > 0 && cores <= 4)) return "low";
+    if ((memory > 0 && memory <= 8) || (cores > 0 && cores <= 4)) return "low";
     if (memory >= 16 && cores >= 8 && !/Intel.*(HD|UHD) Graphics/i.test(gpuName)) return "high";
     return "balanced";
   }
